@@ -31,7 +31,7 @@ public class TestController {
 
     @GetMapping("rate")
     public String getRate() {
-        BaseResult<ExchangeRate> result = rateApi.getRate("AED","INR","application/json",this.apiKey,this.host);
+        ExchangeRate result = rateApi.getRate("AED","INR","application/json",this.apiKey,this.host);
         return JSONObject.toJSONString(result);
     }
 }

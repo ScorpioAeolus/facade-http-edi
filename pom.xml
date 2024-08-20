@@ -29,6 +29,8 @@
     <fastjson.version>1.2.83</fastjson.version> <!-- fastjson -->
     <httpclient.version>4.5.13</httpclient.version>
     <commons-io.version>2.11.0</commons-io.version>
+    <guava.version>19.0</guava.version>
+    <classgraph.version>4.8.105</classgraph.version>
   </properties>
 
   <dependencyManagement>
@@ -59,6 +61,17 @@
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.classgraph</groupId>
+        <artifactId>classgraph</artifactId>
+        <version>${classgraph.version}</version>
       </dependency>
 
 

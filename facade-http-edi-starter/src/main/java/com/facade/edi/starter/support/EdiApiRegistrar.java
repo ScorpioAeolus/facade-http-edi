@@ -1,7 +1,7 @@
 package com.facade.edi.starter.support;
 
 import com.facade.edi.starter.annotation.EnableEdiApiScan;
-import com.facade.edi.starter.scanner.EdiApiBeanScanner;
+import com.facade.edi.starter.scanner.EdiApiScanner;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
@@ -28,10 +28,12 @@ public class EdiApiRegistrar implements ImportBeanDefinitionRegistrar {
         }
         //Set<String> packagesToScan = new HashSet<>(Arrays.asList(basePackages));
         AdviceMode mode =  (AdviceMode) attributes.get("mode");
-        EdiApiBeanScanner scanner = new EdiApiBeanScanner(registry,mode);
+        EdiApiScanner scanner = new EdiApiScanner(registry,mode);
+        scanner.scan(basePackages);
+        //EdiApiBeanScanner scanner = new EdiApiBeanScanner(registry,mode);
 
-        scanner.registerFilters();
-        scanner.doScan(basePackages);
+        //scanner.registerFilters();
+        //scanner.doScan(basePackages);
 
     }
 

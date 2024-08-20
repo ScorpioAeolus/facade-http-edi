@@ -71,7 +71,7 @@ public class HttpServiceMethod {
         HttpApiResponse response;
         response = this.iInvokeHttpFacade.invoke(request);
 
-        if (HttpState.isSuccess(response.getHttpCode())) {
+        if (!HttpState.isSuccess(response.getHttpCode())) {
             log.error("HttpServiceMethod.invoke 远程服务商http接口错误,code={},msg={}",response.getHttpCode(), response.getHttpErrorMsg());
             throw new EdiException(EntityError.API_HTTP_ERROR.getCode(), response.getHttpErrorMsg());
         }

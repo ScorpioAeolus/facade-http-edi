@@ -5,7 +5,6 @@ import com.facade.edi.starter.config.EdiClientConfig;
 import com.facade.edi.starter.config.HttpClientConfig;
 import com.facade.edi.starter.config.OkHttpConfig;
 import com.facade.edi.starter.config.RestTemplateConfig;
-import org.springframework.context.annotation.AutoProxyRegistrar;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -24,19 +23,19 @@ public class EdiConfigurationSelector implements ImportSelector {
         EnableEdiApiScan.ClientType clientType = attributes.getEnum("clientType");
         if(clientType == EnableEdiApiScan.ClientType.REST_TEMPLATE) {
             return new String[] {
-                    AutoProxyRegistrar.class.getName(),
+                    //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
                     RestTemplateConfig.class.getName()
             };
         } else if(clientType == EnableEdiApiScan.ClientType.OK_HTTP) {
             return new String[] {
-                    AutoProxyRegistrar.class.getName(),
+                    //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
                     OkHttpConfig.class.getName()
             };
         } else if(clientType == EnableEdiApiScan.ClientType.HTTP_CLIENT) {
             return new String[] {
-                    AutoProxyRegistrar.class.getName(),
+                    //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
                     HttpClientConfig.class.getName()
             };
