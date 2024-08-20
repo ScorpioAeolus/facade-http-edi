@@ -1,6 +1,5 @@
 package com.facade.edi.starter.enums;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 
 import java.util.Arrays;

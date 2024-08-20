@@ -6,7 +6,6 @@ import com.facade.edi.samples.demo.proxy.AddressRiskResult;
 import com.facade.edi.samples.demo.proxy.ExchangeRate;
 import com.facade.edi.samples.demo.proxy.RateApi;
 import com.facade.edi.samples.demo.proxy.RiskApi;
-import com.facade.edi.starter.response.BaseResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

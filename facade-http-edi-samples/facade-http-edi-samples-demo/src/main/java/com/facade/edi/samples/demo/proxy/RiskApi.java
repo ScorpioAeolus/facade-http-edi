@@ -13,7 +13,7 @@ public interface RiskApi {
     @GET("/v1/risk_score")
     AddressRiskResult queryRisk(@Query("coin") String coin
             , @Query("address") String address
-            , @Header("api_key") String apiKey
+            , @Query("api_key") String apiKey
             , @Header("Content-Type") String contentType
             , @Host("host") String host);
 
