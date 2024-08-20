@@ -19,3 +19,8 @@ currencyapi:
   host: https://api.currencyapi.com
   apiUrl: https://api.currencyapi.com/v3/latest
   apiKey: cur_live_eESOh2PndNo9M9rCZlO9RunTqlfUVcf8AHU27igu
+
+misttrack:
+  host: https://openapi.misttrack.io
+  apiUrl: https://openapi.misttrack.io/v1/risk_score
+  apiKey: pFKTDGgsOmalXdWMAr38Iox5HQYJUL9P
