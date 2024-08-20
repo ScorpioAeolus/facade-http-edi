@@ -19,6 +19,9 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.facade.edi</groupId>
+            <artifactId>facade-http-edi-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

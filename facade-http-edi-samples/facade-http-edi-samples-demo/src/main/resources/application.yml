@@ -1,0 +1,21 @@
+info:
+  app:
+    name: ${spring.application.name}
+    profiles: ${spring.profiles.active}
+    server:
+      port: ${server.port}
+
+server:
+  port: 8088
+  servlet:
+    context-path: / #设置应用的目录.  前缀需要带/, 无需设置后缀, 示例 【 /xxx 】 or 【 / 】
+
+spring:
+  application:
+    name: facade-http-edi-demo
+
+
+currencyapi:
+  host: https://api.currencyapi.com
+  apiUrl: https://api.currencyapi.com/v3/latest
+  apiKey: cur_live_eESOh2PndNo9M9rCZlO9RunTqlfUVcf8AHU27igu
