@@ -2,6 +2,7 @@ package com.facade.edi.starter.request;
 
 
 
+import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.converter.Converter;
 
 import java.io.IOException;
@@ -148,6 +149,26 @@ public abstract class ParameterHandler<T> {
                 return;
             }
             request.setHost(hostValue);
+        }
+    }
+
+    public static final class ResponseConverter<T extends ClientResponseConverter<?>> extends ParameterHandler<T> {
+
+        private Method method;
+
+        private final int p;
+
+        public ResponseConverter(Method method, int p) {
+            this.method = method;
+            this.p = p;
+        }
+
+        @Override
+        public void apply(HttpApiRequest request, T value) throws IOException {
+            if (value == null) {
+                return;
+            }
+            request.setResponseConverter(value);
         }
     }
 

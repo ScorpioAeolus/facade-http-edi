@@ -2,6 +2,7 @@ package com.facade.edi.starter.support;
 
 import com.facade.edi.starter.annotation.param.Header;
 import com.facade.edi.starter.annotation.param.Host;
+import com.facade.edi.starter.annotation.param.ResponseConvert;
 import com.facade.edi.starter.converter.Converter;
 import com.facade.edi.starter.request.HttpApiRequest;
 import com.facade.edi.starter.request.ParameterHandler;
@@ -147,6 +148,8 @@ public class RequestFactory {
         boolean gotHost;
 
         boolean gotHeader;
+
+        boolean gotConverter;
 
         String httpMethod;
         boolean hasBody;
@@ -352,14 +355,22 @@ public class RequestFactory {
                 return processHeader(p,type,(Header) annotation,converter);
             } else if (annotation instanceof Host) {
                 return processHost(p,type,(Host)annotation,converter);
+            } else if (annotation instanceof ResponseConvert) {
+                return processResponseConverter(p,type);
             }
 
             return null;
         }
 
+        private ParameterHandler<?> processResponseConverter(int p,Type type) {
+            validateResolvableType(p, type);
+            gotConverter = true;
+            return new ParameterHandler.ResponseConverter<>(method,p);
+        }
+
         private ParameterHandler<?> processHost(int p,Type type, Host host, Converter<Object, String> converter) {
             validateResolvableType(p, type);
-            gotHeader = true;
+            gotHost = true;
             String name = host.value();
             return new ParameterHandler.Host<>(method,p,name,converter);
         }

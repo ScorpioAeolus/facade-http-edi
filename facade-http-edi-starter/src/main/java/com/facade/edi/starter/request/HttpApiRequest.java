@@ -1,5 +1,6 @@
 package com.facade.edi.starter.request;
 
+import com.facade.edi.starter.converter.ClientResponseConverter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,8 @@ public class HttpApiRequest implements Serializable {
     private String handle;
     private boolean needResponseHead;
 
+    private ClientResponseConverter<?> responseConverter;
+
     public void addQueryParam(String name, String queryValue) {
         params.put(name,queryValue);
     }
@@ -37,5 +40,9 @@ public class HttpApiRequest implements Serializable {
 
     public void addHeader(String name,String value) {
         headers.put(name,value);
+    }
+
+    public void setResponseConverter(ClientResponseConverter<?> responseConverter) {
+        this.responseConverter = responseConverter;
     }
 }

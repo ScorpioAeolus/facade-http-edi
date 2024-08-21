@@ -1,5 +1,6 @@
 package com.facade.edi.starter.support;
 
+import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.enums.HttpState;
 import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.constants.EntityError;
@@ -76,13 +77,14 @@ public class HttpServiceMethod {
             throw new EdiException(EntityError.API_HTTP_ERROR.getCode(), response.getHttpErrorMsg());
         }
         try {
-            Object returnObj = responseConverter.convert(response.getResponse());
+            //如果用户传了自定义转换器,优先使用传入的;如果没有传入则使用默认的
+            Object returnObj = null != request.getResponseConverter() ? request.getResponseConverter().convert(response.getResponse()) : responseConverter.convert(response.getResponse());
             if(needResponseHead){
                 ((ResponseHeader)returnObj).setResponseHeader(response.getHeader());
             }
             return returnObj;
         } catch (Exception e) {
-            log.error("返回值转换异常 response:{}",response.getResponse());
+            log.error("HttpServiceMethod.invoke 返回值转换异常 response:{}",response.getResponse());
             throw new EdiException(e, EntityError.API_HTTP_ERROR.getCode(), "返回值转换异常");
         }
     }
