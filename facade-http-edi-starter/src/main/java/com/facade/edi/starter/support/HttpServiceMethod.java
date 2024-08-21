@@ -1,6 +1,5 @@
 package com.facade.edi.starter.support;
 
-import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.enums.HttpState;
 import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.constants.EntityError;
