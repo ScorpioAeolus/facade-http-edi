@@ -23,10 +23,6 @@ import java.lang.reflect.Type;
  */
 @Slf4j
 public class HttpServiceMethod {
-    public static final String MOCK = "mock";
-    public static final String FORCE = "force";
-    public static final String SCENE_ID = "sceneId";
-    private static final int HTTP_ERROR_CODE = 400;
     private final RequestFactory requestFactory;
     private final Converter<String, ?> responseConverter;
     private final IInvokeHttpFacade iInvokeHttpFacade;
