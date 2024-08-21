@@ -8,9 +8,7 @@ import com.facade.edi.samples.demo.proxy.ExchangeRate;
 import com.facade.edi.samples.demo.proxy.RateApi;
 import com.facade.edi.samples.demo.proxy.RiskApi;
 import com.facade.edi.starter.constants.EntityError;
-import com.facade.edi.starter.constants.IError;
 import com.facade.edi.starter.converter.ClientResponseConverter;
-import com.facade.edi.starter.converter.Converter;
 import com.facade.edi.starter.exception.EdiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/test")
