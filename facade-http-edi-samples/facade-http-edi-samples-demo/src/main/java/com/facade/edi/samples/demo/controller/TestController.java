@@ -7,8 +7,12 @@ import com.facade.edi.samples.demo.proxy.AddressRiskResult;
 import com.facade.edi.samples.demo.proxy.ExchangeRate;
 import com.facade.edi.samples.demo.proxy.RateApi;
 import com.facade.edi.samples.demo.proxy.RiskApi;
+import com.facade.edi.starter.constants.EntityError;
+import com.facade.edi.starter.constants.IError;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.converter.Converter;
+import com.facade.edi.starter.exception.EdiException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +23,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
 
 
@@ -41,22 +46,35 @@ public class TestController {
     @Resource
     RiskApi riskApi;
 
-    @GetMapping("rate")
+    @GetMapping("/rate")
     public String getRate() {
         ExchangeRate result = rateApi.getRate("AED","INR","application/json",this.apiKey,this.host);
         return JSONObject.toJSONString(result);
     }
 
+    @GetMapping("/rate/v2")
+    public String getRateV2() {
+        ExchangeRate result = rateApi.getRateV2("AED", "INR", "application/json", this.apiKey, t -> JSONObject.parseObject(t,ExchangeRate.class));
+        return JSONObject.toJSONString(result);
+    }
+
     @GetMapping("/risk")
     public String queryRisk() {
-        Converter<String,AddressRiskResult.DataBean> converter = (ClientResponseConverter<AddressRiskResult.DataBean>) t -> {
-            AddressRiskResult result = JSON.parseObject(t, AddressRiskResult.class);
-            if(Boolean.TRUE.equals(result.getSuccess())) {
-                return result.getData();
-            }
-            throw new RuntimeException("remote call failed");
-        };
         AddressRiskResult result = this.riskApi.queryRisk("USDT-TRC20","TJWwwpnfKNx2EMTaDrJ6KuEoj6ERpUcVKj",this.riskApiKey,"application/json",this.riskHost);
+        return JSONObject.toJSONString(result);
+    }
+
+    @GetMapping("/risk/v2")
+    public String queryRiskV2() {
+        ClientResponseConverter<AddressRiskResult.DataBean> converter = t -> {
+            AddressRiskResult result = JSON.parseObject(t, AddressRiskResult.class);
+            if (null == result || !Boolean.TRUE.equals(result.getSuccess())) {
+                log.warn("queryRiskV2;result={}", result);
+                throw new EdiException(EntityError.RPC_RESPONSE_FALSE.getCode(),null != result ? result.getMsg() : EntityError.RPC_RESPONSE_FALSE.getMsg());
+            }
+            return result.getData();
+        };
+        AddressRiskResult.DataBean result = this.riskApi.queryRiskV2("USDT-TRC20", "TJWwwpnfKNx2EMTaDrJ6KuEoj6ERpUcVKj", this.riskApiKey, "application/json",converter );
         return JSONObject.toJSONString(result);
     }
 }

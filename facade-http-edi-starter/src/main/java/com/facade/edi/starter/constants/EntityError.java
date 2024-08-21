@@ -34,4 +34,11 @@ public class EntityError implements Serializable, IError {
 
     public static final EntityError API_HTTP_ERROR = new EntityError(506, "remote http server occur error");
 
+    public static final EntityError RPC_RESPONSE_NULL= new EntityError(507,"service response null");
+    public static final EntityError RPC_RESPONSE_FAILED= new EntityError(580,"service response failed");
+    public static final EntityError RPC_RESPONSE_FALSE= new EntityError(509,"service response false");
+    public static final EntityError RPC_OCCUR_ERROR= new EntityError(511,"service occur error");
+    public static final EntityError RPC_RESPONSE_ERROR      = new EntityError(512,"rpc response error");
+
+
 }
