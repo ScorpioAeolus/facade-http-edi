@@ -24,3 +24,7 @@ misttrack:
   host: https://openapi.misttrack.io
   apiUrl: https://openapi.misttrack.io/v1/risk_score
   apiKey: pFKTDGgsOmalXdWMAr38Iox5HQYJUL9P
+
+payout:
+  host: https://x1.admin2millliet.com
+  accessSecret: RS6t5Cqm4JjsrqeLya6xAsecx7RHD5e6

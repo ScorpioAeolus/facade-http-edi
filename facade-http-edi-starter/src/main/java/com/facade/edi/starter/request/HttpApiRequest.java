@@ -3,6 +3,7 @@ package com.facade.edi.starter.request;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @Getter
 @Setter
+@ToString(exclude = {"responseConverter"})
 public class HttpApiRequest implements Serializable {
     private static final long serialVersionUID = -1L;
     private String host;
@@ -20,10 +22,9 @@ public class HttpApiRequest implements Serializable {
     private Map<String, String> headers = new HashMap<>();
     private Map<String, String> fields;
     private String body;
-    private String token;
-    private String handle;
     private boolean needResponseHead;
 
+    @Setter
     private ClientResponseConverter<?> responseConverter;
 
     public void addQueryParam(String name, String queryValue) {
@@ -42,7 +43,4 @@ public class HttpApiRequest implements Serializable {
         headers.put(name,value);
     }
 
-    public void setResponseConverter(ClientResponseConverter<?> responseConverter) {
-        this.responseConverter = responseConverter;
-    }
 }

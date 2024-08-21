@@ -5,18 +5,24 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.facade.edi.samples.demo.proxy.AddressRiskResult;
 import com.facade.edi.samples.demo.proxy.ExchangeRate;
+import com.facade.edi.samples.demo.proxy.PayoutApi;
 import com.facade.edi.samples.demo.proxy.RateApi;
 import com.facade.edi.samples.demo.proxy.RiskApi;
+import com.facade.edi.samples.demo.proxy.req.CreatePayoutPO;
+import com.facade.edi.samples.demo.proxy.resp.PayoutResult;
 import com.facade.edi.starter.constants.EntityError;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.exception.EdiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/test")
@@ -37,11 +43,17 @@ public class TestController {
     @Value("${misttrack.apiKey:}")
     private String riskApiKey;
 
+    @Value("${payout.accessSecret:}")
+    private String payoutAccessSecret;
+
     @Resource
     RateApi rateApi;
 
     @Resource
     RiskApi riskApi;
+
+    @Resource
+    PayoutApi payoutApi;
 
     @GetMapping("/rate")
     public String getRate() {
@@ -79,5 +91,11 @@ public class TestController {
     public String queryRiskV3() {
         AddressRiskResult.DataBean result = this.riskApi.queryRiskV3("USDT-TRC20", "TJWwwpnfKNx2EMTaDrJ6KuEoj6ERpUcVKj", this.riskApiKey, "application/json","test" );
         return JSONObject.toJSONString(result);
+    }
+
+    @PostMapping("/payout/create")
+    public String createPayout(@RequestBody CreatePayoutPO createPayoutPO) {
+        PayoutResult payoutResult = this.payoutApi.createPayout(this.payoutAccessSecret,"application/json",createPayoutPO, t -> JSONObject.parseObject(t,PayoutResult.class));
+        return JSONObject.toJSONString(payoutResult);
     }
 }
