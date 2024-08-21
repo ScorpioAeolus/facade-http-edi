@@ -66,6 +66,7 @@ public class HttpServiceMethod {
         try {
             request = requestFactory.create(args,this.host);
         } catch (IOException e) {
+            log.error("HttpServiceMethod.invoke 入参转换异常",e);
             throw new EdiException(e, EntityError.ILLEGAL_ARGUMENT.getCode(), "入参转换异常");
         }
         request.setNeedResponseHead(needResponseHead);
