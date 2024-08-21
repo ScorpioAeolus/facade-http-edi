@@ -74,4 +74,10 @@ public class TestController {
         AddressRiskResult.DataBean result = this.riskApi.queryRiskV2("USDT-TRC20", "TJWwwpnfKNx2EMTaDrJ6KuEoj6ERpUcVKj", this.riskApiKey, "application/json",converter );
         return JSONObject.toJSONString(result);
     }
+
+    @GetMapping("/risk/v3")
+    public String queryRiskV3() {
+        AddressRiskResult.DataBean result = this.riskApi.queryRiskV3("USDT-TRC20", "TJWwwpnfKNx2EMTaDrJ6KuEoj6ERpUcVKj", this.riskApiKey, "application/json","test" );
+        return JSONObject.toJSONString(result);
+    }
 }

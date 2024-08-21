@@ -2,8 +2,11 @@ package com.facade.edi.starter.request;
 
 
 
+import com.facade.edi.starter.constants.EntityError;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.converter.Converter;
+import com.facade.edi.starter.exception.EdiException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -14,6 +17,7 @@ import java.util.Objects;
 import static com.facade.edi.starter.util.EdiUtil.parameterError;
 
 
+@Slf4j
 public abstract class ParameterHandler<T> {
     public abstract void apply(HttpApiRequest httpApiRequest, T value) throws IOException;
 
@@ -152,7 +156,7 @@ public abstract class ParameterHandler<T> {
         }
     }
 
-    public static final class ResponseConverter<T extends ClientResponseConverter<?>> extends ParameterHandler<T> {
+    public static final class ResponseConverter<T> extends ParameterHandler<T> {
 
         private Method method;
 
@@ -168,7 +172,11 @@ public abstract class ParameterHandler<T> {
             if (value == null) {
                 return;
             }
-            request.setResponseConverter(value);
+            if(!(value instanceof  ClientResponseConverter)) {
+                log.warn("ResponseConverter.apply parameter not ClientResponseConverter type;type={}",value.getClass().getSimpleName());
+                throw  EdiException.of(EntityError.RESPONSE_CONVERTER_TYPE_ILLEGAL);
+            }
+            request.setResponseConverter((ClientResponseConverter<?>) value);
         }
     }
 

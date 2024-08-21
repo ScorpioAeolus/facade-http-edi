@@ -25,4 +25,11 @@ public interface RiskApi {
             , @Query("api_key") String apiKey
             , @Header("Content-Type") String contentType
             , @ResponseConvert ClientResponseConverter<AddressRiskResult.DataBean> converter);
+
+    @GET("/v1/risk_score")
+    AddressRiskResult.DataBean queryRiskV3(@Query("coin") String coin
+            , @Query("address") String address
+            , @Query("api_key") String apiKey
+            , @Header("Content-Type") String contentType
+            , @ResponseConvert String converter);
 }

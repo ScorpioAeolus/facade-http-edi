@@ -39,6 +39,8 @@ public class EntityError implements Serializable, IError {
     public static final EntityError RPC_RESPONSE_FALSE= new EntityError(509,"service response false");
     public static final EntityError RPC_OCCUR_ERROR= new EntityError(511,"service occur error");
     public static final EntityError RPC_RESPONSE_ERROR      = new EntityError(512,"rpc response error");
+    public static final EntityError RESPONSE_CONVERTER_TYPE_ILLEGAL      = new EntityError(513,"response converter type illegal");
+
 
 
 }
