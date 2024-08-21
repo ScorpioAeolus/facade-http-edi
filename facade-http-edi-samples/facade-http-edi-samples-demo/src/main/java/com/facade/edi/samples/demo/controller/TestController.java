@@ -3,13 +3,16 @@ package com.facade.edi.samples.demo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.facade.edi.samples.demo.proxy.AddressRiskResult;
 import com.facade.edi.samples.demo.proxy.ExchangeRate;
 import com.facade.edi.samples.demo.proxy.PayoutApi;
 import com.facade.edi.samples.demo.proxy.RateApi;
 import com.facade.edi.samples.demo.proxy.RiskApi;
 import com.facade.edi.samples.demo.proxy.req.CreatePayoutPO;
+import com.facade.edi.samples.demo.proxy.req.QueryPayoutPO;
 import com.facade.edi.samples.demo.proxy.resp.PayoutResult;
+import com.facade.edi.samples.demo.proxy.resp.QueryPayoutResult;
 import com.facade.edi.starter.constants.EntityError;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.exception.EdiException;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/test")
@@ -97,5 +101,16 @@ public class TestController {
     public String createPayout(@RequestBody CreatePayoutPO createPayoutPO) {
         PayoutResult payoutResult = this.payoutApi.createPayout(this.payoutAccessSecret,"application/json",createPayoutPO, t -> JSONObject.parseObject(t,PayoutResult.class));
         return JSONObject.toJSONString(payoutResult);
+    }
+
+    @PostMapping("/payout/query")
+    public String queryPayout(@RequestBody QueryPayoutPO queryPayoutPO) {
+        List<QueryPayoutResult> results = this.payoutApi.queryPayout(this.payoutAccessSecret, "application/json", queryPayoutPO, new ClientResponseConverter<List<PayoutResult>>() {
+            @Override
+            public List<PayoutResult> convert(String t) throws IOException {
+                return JSONObject.parseObject(t,new TypeReference<List<PayoutResult>>(){});
+            }
+        });
+        return JSONObject.toJSONString(results);
     }
 }

@@ -2,25 +2,28 @@ package com.facade.edi.samples.demo.proxy.resp;
 
 import lombok.Data;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Data
-public class PayoutResult implements Serializable {
+public class QueryPayoutResult {
 
-    private static final long serialVersionUID = -5980407373010674487L;
 
     private String code;
 
     private String message;
 
-    private DataBean data;
+    private List<DataBean> data;
+
+
 
     @Data
     public static class DataBean {
         private String orderNo;
 
         private Integer transferStatus;
-    }
 
+        private BigDecimal transferAmount;
+    }
 
 }
