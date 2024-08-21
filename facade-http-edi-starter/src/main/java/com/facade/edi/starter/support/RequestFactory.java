@@ -51,10 +51,7 @@ public class RequestFactory {
     private final boolean hasBody;
     private final boolean isFormEncoded;
     private final boolean isMultipart;
-    //private final OutTarget outTarget;
-    private final String module;
-    //private final UserTypeEnum userType;
-    //private TokenService tokenService;
+
 
     private ParameterHandler<?>[] parameterHandlers;
 
@@ -67,13 +64,13 @@ public class RequestFactory {
         isMultipart = builder.isMultipart;
         parameterHandlers = builder.parameterHandlers;
         //this.outTarget = builder.outTarget;
-        this.module = builder.module;
 
         //this.userType = builder.userType;
         //this.tokenService=builder.tokenService;
     }
 
-    public HttpApiRequest create(Object[] args) throws IOException {
+
+    public HttpApiRequest create(Object[] args,String host) throws IOException {
         ParameterHandler<Object>[] handlers = (ParameterHandler<Object>[]) parameterHandlers;
         int argumentCount = args.length;
         if (argumentCount != handlers.length) {
@@ -90,9 +87,9 @@ public class RequestFactory {
         for (int p = 0; p < argumentCount; p++) {
             handlers[p].apply(request, args[p]);
         }
-        request.setModule(module);
         request.setHttpMethod(httpMethod);
-        request.setUrl(this.buildFullUrl(request.getHost(),relativeUrl));
+        //构造完整url的时候,如果method维度制定了host那么优先使用method的host,否则使用EdiApi指定的host
+        request.setUrl(this.buildFullUrl(null != request.getHost()? request.getHost() : host,relativeUrl));
         return request;
     }
 
@@ -161,7 +158,7 @@ public class RequestFactory {
         ParameterHandler<?>[] parameterHandlers;
         EdiApiProxyFactory ediApiProxyFactory;
         //OutTarget outTarget;
-        String module;
+        String hostKey;
 //        UserTypeEnum userType;
 //        TokenService tokenService;
 
@@ -216,7 +213,7 @@ public class RequestFactory {
             }
             EdiApi ediApi = method.getDeclaringClass().getAnnotation(EdiApi.class);
             //outTarget = ediApi.site();
-            module = ediApi.module();
+            hostKey = ediApi.hostKey();
             return new RequestFactory(this);
         }
 

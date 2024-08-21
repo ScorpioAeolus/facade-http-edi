@@ -27,6 +27,8 @@ public class HttpServiceMethod {
     private final Converter<String, ?> responseConverter;
     private final IInvokeHttpFacade iInvokeHttpFacade;
 
+    private final String host;
+
 
     //private Map<String, AtomicInteger> apiInvokeMap = new ConcurrentHashMap<>();
 
@@ -42,12 +44,14 @@ public class HttpServiceMethod {
         }
         Converter<String, ?> responseConverter = ediApiProxyFactory.responseConverter(method.getGenericReturnType());
         IInvokeHttpFacade iInvokeHttpFacade = ediApiProxyFactory.getIInvokeHttpFacade();
-        return new HttpServiceMethod(requestFactory, responseConverter, iInvokeHttpFacade);
+        String host = ediApiProxyFactory.getHost(method);
+        return new HttpServiceMethod(requestFactory,host, responseConverter, iInvokeHttpFacade);
     }
 
 
-    HttpServiceMethod(RequestFactory requestFactory, Converter<String, ?> responseConverter, IInvokeHttpFacade iInvokeHttpFacade) {
+    HttpServiceMethod(RequestFactory requestFactory,String host, Converter<String, ?> responseConverter, IInvokeHttpFacade iInvokeHttpFacade) {
         this.requestFactory = requestFactory;
+        this.host = host;
         this.responseConverter = responseConverter;
         this.iInvokeHttpFacade = iInvokeHttpFacade;
     }
@@ -59,7 +63,7 @@ public class HttpServiceMethod {
 
         HttpApiRequest request;
         try {
-            request = requestFactory.create(args);
+            request = requestFactory.create(args,this.host);
         } catch (IOException e) {
             throw new EdiException(e, EntityError.ILLEGAL_ARGUMENT.getCode(), "入参转换异常");
         }

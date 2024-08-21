@@ -1,13 +1,16 @@
 package com.facade.edi.starter.support;
 
 
+import com.facade.edi.starter.annotation.EdiApi;
 import com.facade.edi.starter.converter.Converter;
 import com.facade.edi.starter.converter.ConverterFactory;
 import com.facade.edi.starter.service.IInvokeHttpFacade;
+import com.facade.edi.starter.util.StringUtil;
 import lombok.Getter;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
+import org.springframework.core.env.Environment;
 
 import javax.annotation.Resource;
 import java.lang.reflect.InvocationHandler;
@@ -26,12 +29,20 @@ public class EdiApiProxyFactory {
     @Resource
     private ConverterFactory converterFactory;
 
+    @Resource
+    private Environment environment;
 
     @Resource
     @Getter
     IInvokeHttpFacade iInvokeHttpFacade;
 
-
+    public String getHost(Method method) {
+        EdiApi ediApi = method.getDeclaringClass().getAnnotation(EdiApi.class);
+        if(StringUtil.isBlank(ediApi.hostKey())) {
+            return null;
+        }
+        return this.environment.getProperty(ediApi.hostKey());
+    }
 
     public Converter<Object, String> stringConverter() {
         return converterFactory.stringConverter();

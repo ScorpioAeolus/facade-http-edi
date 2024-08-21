@@ -11,7 +11,6 @@ import java.util.Map;
 @Setter
 public class HttpApiRequest implements Serializable {
     private static final long serialVersionUID = -1L;
-    private String module;
     private String host;
     private String url;
     private String httpMethod;
