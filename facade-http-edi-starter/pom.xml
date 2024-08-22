@@ -8,10 +8,13 @@
     </parent>
 
     <artifactId>facade-http-edi-starter</artifactId>
+    <version>1.0.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>facade-http-edi-starter</name>
-    <url>http://maven.apache.org</url>
+    <description>dcs-scheduler</description>
+    <url>https://github.com/ScorpioAeolus/facade-http-edi</url>
+
 
     <licenses>
         <license>
@@ -55,6 +58,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>2.13.3</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
