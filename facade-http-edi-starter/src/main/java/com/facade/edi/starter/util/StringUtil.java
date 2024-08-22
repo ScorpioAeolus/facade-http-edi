@@ -1,6 +1,5 @@
 package com.facade.edi.starter.util;
 
-import org.springframework.util.Base64Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.regex.Pattern;
  * 字符串工具类
  *
  * @author typhoon
- * @date 2020-11-16 17:06 Monday
  * @since V1.0.0
  */
 public class StringUtil {

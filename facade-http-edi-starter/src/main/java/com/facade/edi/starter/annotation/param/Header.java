@@ -11,7 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 请求头注解
  *
  * @author typhoon
- * @date 2024-08-16 15:39 Friday
  *
  */
 @Documented

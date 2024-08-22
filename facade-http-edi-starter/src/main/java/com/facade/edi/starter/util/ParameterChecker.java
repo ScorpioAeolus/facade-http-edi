@@ -6,7 +6,6 @@ import java.util.Collection;
  * 参数校验工具类
  *
  * @author typhoon
- * @date 2022-06-22 10:37 Wednesday
  * @since V1.0.0
  */
 public class ParameterChecker {

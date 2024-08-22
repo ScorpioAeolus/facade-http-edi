@@ -7,7 +7,6 @@ import com.facade.edi.starter.constants.IError;
  * edi异常定义
  *
  * @author typhoon
- * @date 2024-08-16 14:44 Friday
  */
 public class EdiException extends RuntimeException {
     private static final long serialVersionUID = 5518061110734720630L;

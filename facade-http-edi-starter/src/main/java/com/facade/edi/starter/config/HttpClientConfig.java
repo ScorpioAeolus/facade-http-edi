@@ -33,7 +33,6 @@ import java.security.cert.X509Certificate;
  * httpClient客户端配置
  *
  * @author typhoon
- * @date 2024-08-19 16:23 Monday
  */
 @Slf4j
 //@Configuration

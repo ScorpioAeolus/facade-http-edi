@@ -16,11 +16,9 @@ import java.util.Map;
  *
  * @description <ul>
  *                  <li>1.三方http & https调用封装</li>
- *                  <li>2.二方http服务调用封装,二方dubbo服务调用比较简单,直接应用层自己实现</li>
  *              </ul>
  *
  * @author Typhoon
- * @date 2022-07-05 11:00 Tuesday
  */
 @Slf4j
 public abstract  class AbstractInvokeHttpFacade implements IInvokeHttpFacade {

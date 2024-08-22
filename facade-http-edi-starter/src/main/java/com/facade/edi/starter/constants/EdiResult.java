@@ -8,7 +8,6 @@ import java.io.Serializable;
  * 统一的结果封装类
  *
  * @author typhoon
- * @date 2019-07-15 15:18 Monday
  * @since V2.0.0
  */
 public class EdiResult<T> implements Serializable {

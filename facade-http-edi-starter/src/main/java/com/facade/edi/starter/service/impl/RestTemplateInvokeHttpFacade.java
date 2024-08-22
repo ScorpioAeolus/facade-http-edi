@@ -27,7 +27,6 @@ import java.util.Objects;
  * spring自带的restTemplate
  *
  * @author typhoon
- * @date 2024-08-19 11:44
  */
 @Slf4j
 public class RestTemplateInvokeHttpFacade extends AbstractInvokeHttpFacade {

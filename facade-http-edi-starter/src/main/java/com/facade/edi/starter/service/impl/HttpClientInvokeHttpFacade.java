@@ -34,7 +34,6 @@ import java.util.Map;
  * HttpClient调用实现
  *
  * @author typhoon
- * @date 2024-08-19 11:49 Monday
  *
  */
 @Slf4j

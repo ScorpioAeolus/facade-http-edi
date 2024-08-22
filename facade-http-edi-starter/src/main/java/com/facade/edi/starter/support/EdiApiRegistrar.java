@@ -12,7 +12,6 @@ import org.springframework.core.type.AnnotationMetadata;
  * 远程调用接口解析类
  *
  * @author Typhoon
- * @date 2024-08-19 21:51 Monday
  */
 public class EdiApiRegistrar implements ImportBeanDefinitionRegistrar {
 

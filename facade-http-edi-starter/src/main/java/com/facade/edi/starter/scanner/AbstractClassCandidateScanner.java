@@ -12,7 +12,6 @@ import java.util.Set;
  * 抽象目标类扫描器
  *
  * @author typhoon
- * @date 2024-08-15 20:00 Thursday
  */
 @Getter
 public abstract class AbstractClassCandidateScanner implements IClassCandidateScanner {

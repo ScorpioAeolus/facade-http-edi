@@ -16,7 +16,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 远程API接口扫描注解
  *
  * @author Typhoon
- * @date 2022-07-05 10:03 Tuesday
  */
 
 @Target(ElementType.TYPE)

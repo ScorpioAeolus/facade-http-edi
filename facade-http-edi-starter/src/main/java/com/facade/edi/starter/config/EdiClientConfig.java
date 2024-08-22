@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
  * edi客户端配置类
  *
  * @author typhoon
- * @date 2024-08-19 14:40 Monday
  */
 @Configuration
 public class EdiClientConfig {

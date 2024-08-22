@@ -19,7 +19,6 @@ import java.lang.reflect.Type;
  * 将远程API接口调用封装成http调用
  *
  * @author Typhoon
- * @date 2022-07-05 10:52 Tuesday
  */
 @Slf4j
 public class HttpServiceMethod {

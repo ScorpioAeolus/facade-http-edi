@@ -12,7 +12,6 @@ import java.util.List;
  * 类扫描器
  *
  * @author typhoon
- * @date 2024-08-15 20:03 Thursday
  */
 public class FastClassPathScanner extends AbstractClassCandidateScanner {
 

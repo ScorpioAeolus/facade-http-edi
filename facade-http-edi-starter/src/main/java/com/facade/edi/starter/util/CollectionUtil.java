@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  *
  *
  * @author typhoon
- * @date 2020-11-16 17:03 Monday
  * @since V1.0.0
  */
 public class CollectionUtil {

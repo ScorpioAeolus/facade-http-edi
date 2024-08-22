@@ -15,7 +15,6 @@ import java.util.Set;
  * spi注解扫描器
  *
  * @author typhoon
- * @date 2024-08-15 19:51 Thursday
  */
 @Slf4j
 public class EdiApiScanner {

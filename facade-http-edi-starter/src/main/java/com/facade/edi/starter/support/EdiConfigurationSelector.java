@@ -13,7 +13,6 @@ import org.springframework.core.type.AnnotationMetadata;
  * 配置选择器
  *
  * @author typhoon
- * @date 2024-08-19 21:50 Monday
  */
 public class EdiConfigurationSelector implements ImportSelector {
     @Override

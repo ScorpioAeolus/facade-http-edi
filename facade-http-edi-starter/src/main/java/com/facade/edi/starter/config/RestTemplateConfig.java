@@ -37,7 +37,6 @@ import java.util.List;
  * restTemplate客户端配置
  *
  * @author typhoon
- * @date 2024-08-19 15:16 Monday
  */
 @Slf4j
 public class RestTemplateConfig {

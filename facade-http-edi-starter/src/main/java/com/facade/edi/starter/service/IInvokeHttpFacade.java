@@ -10,7 +10,6 @@ import com.facade.edi.starter.util.ParameterChecker;
  * http调用接口门面
  *
  * @author Typhoon
- * @date 2022-07-05 16:13 Tuesday
  */
 public interface IInvokeHttpFacade {
 

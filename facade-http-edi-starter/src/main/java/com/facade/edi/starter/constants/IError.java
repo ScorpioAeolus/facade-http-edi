@@ -5,7 +5,6 @@ import java.io.Serializable;
  * 响应码定义
  *
  * @author typhoon
- * @date 2019-08-23 14:44 Friday
  * @since V2.0.0
  */
 public interface IError extends Serializable {

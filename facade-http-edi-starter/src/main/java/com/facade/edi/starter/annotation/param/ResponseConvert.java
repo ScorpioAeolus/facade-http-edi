@@ -26,7 +26,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 结果响应转换器注解
  *
  * @author typhoon
- * @date 2024-08-21 14:09 Wednesday
  */
 @Documented
 @Target(PARAMETER)

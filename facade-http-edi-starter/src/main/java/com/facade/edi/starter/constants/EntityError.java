@@ -10,7 +10,6 @@ import java.io.Serializable;
  * 响应码
  *
  * @author typhoon
- * @date 2019-07-11 14:45
  * @since V2.0.0
  */
 @Data

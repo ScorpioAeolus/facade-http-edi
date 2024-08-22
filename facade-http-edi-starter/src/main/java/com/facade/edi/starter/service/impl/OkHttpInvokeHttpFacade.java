@@ -32,7 +32,6 @@ import java.util.Objects;
  * OkHttp调用实现
  *
  * @author typhoon
- * @date 2024-08-19 11:49 Monday
  */
 @Slf4j
 public class OkHttpInvokeHttpFacade extends AbstractInvokeHttpFacade {
