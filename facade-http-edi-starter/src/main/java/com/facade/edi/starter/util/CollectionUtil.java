@@ -47,7 +47,7 @@ public class CollectionUtil {
      * @param source source
      * @param target target
      * @param <T> type
-     * @return <T>
+     * @return Collection
      */
     public static final <T> Collection<T> diffSet(Collection<T> source,Collection<T> target) {
         if(isEmpty(source)) {
@@ -68,7 +68,7 @@ public class CollectionUtil {
      * @param source source
      * @param target target
      * @param <T> t
-     * @return T
+     * @return Collection
      */
     public static final <T> Collection<T> intersect(Collection<T> source,Collection<T> target) {
         if(isEmpty(source) || isEmpty(target)) {

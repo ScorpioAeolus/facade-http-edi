@@ -147,37 +147,6 @@ public class StringUtil {
         return result;
     }
 
-    /**
-     * 1.先按照实际要截取的字节长度，复制一份字节数组
-     *
-     * 2.转换回字符串，计算字符长度resLen，并按这个长度截取原字符串
-     *
-     * 3.计算截取的字符串的字节数是否等于需求长度len，相等则直接返回，不相等，则在resLen的基础上减1再截取，则为需要的结果
-     * String的substring是按字符长度截取，可能最后一个字符会是半个字符
-     * 转回bytes后判断是否超过长度，是的话，向前再截取1位,防止最后最后一个byte为半个字符的无效字符,舍弃
-     * @param str str
-     * @param len length
-     * @param charSet charset
-     * @return String
-     */
-    public static final String subStrByBytes(String str, int len, String charSet) throws UnsupportedEncodingException {
-        if (isEmpty(str)) {
-            return str;
-        }
-        byte[] bt = str.getBytes(charSet);
-        if (bt.length <= len){
-            return str;
-        }
-        byte[] br = new byte[len];
-        System.arraycopy(bt, 0, br, 0, len);
-        String res = new String(br, charSet);
-        int resLen = res.length();
-        if (str.substring(0, resLen).getBytes(charSet).length > len) {
-            res = str.substring(0, resLen - 1);
-        }
-        return res;
-    }
-
     public static final List<String> divideStrByBytes(String str,int len, String charSet) throws UnsupportedEncodingException{
         List<String> strSection = new ArrayList<>();
         byte[] bt = str.getBytes(charSet);

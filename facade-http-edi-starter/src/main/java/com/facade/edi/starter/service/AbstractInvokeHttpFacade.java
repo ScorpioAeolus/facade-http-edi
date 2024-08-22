@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.Map;
 
 /**
- * EDI调用远程http & https接口封装
+ * EDI调用远程http和https接口封装
  *
  *
  * @author Typhoon
