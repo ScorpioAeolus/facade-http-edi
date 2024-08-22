@@ -8,7 +8,6 @@ import com.facade.edi.starter.annotation.param.Query;
 import com.facade.edi.starter.annotation.param.ResponseConvert;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 
-
 @EdiApi(hostKey = "currencyapi.host")
 public interface RateApi {
 
