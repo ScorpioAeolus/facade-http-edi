@@ -109,15 +109,12 @@ public class TestController {
 
     @PostMapping("/payout/query")
     public String queryPayout(@RequestBody QueryPayoutPO queryPayoutPO) {
-        List<QueryPayoutResult.DataBean> results = this.payoutApi.queryPayout(this.payoutAccessSecret, "application/json", queryPayoutPO, new ClientResponseConverter<List<QueryPayoutResult.DataBean>>() {
-            @Override
-            public List<QueryPayoutResult.DataBean> convert(String t) throws IOException {
-                QueryPayoutResult result = JSONObject.parseObject(t,QueryPayoutResult.class);
-                if(null == result || !Objects.equals(PAYOUT_SUCCESS_CODE,result.getCode())) {
-                    return Collections.emptyList();
-                }
-                return result.getData();
+        List<QueryPayoutResult.DataBean> results = this.payoutApi.queryPayout(this.payoutAccessSecret, "application/json", queryPayoutPO, t -> {
+            QueryPayoutResult result = JSONObject.parseObject(t,QueryPayoutResult.class);
+            if(null == result || !Objects.equals(PAYOUT_SUCCESS_CODE,result.getCode())) {
+                return Collections.emptyList();
             }
+            return result.getData();
         });
         return JSONObject.toJSONString(results);
     }
