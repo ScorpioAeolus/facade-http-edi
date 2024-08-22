@@ -23,9 +23,9 @@ public interface PayoutApi {
             , @Header("Content-Type") String contentType
             , @Body CreatePayoutPO createPayoutPO, @ResponseConvert ClientResponseConverter<PayoutResult> converter);
 
-    @POST("/support/transfer/query")
-    List<QueryPayoutResult> queryPayout(@Header("ACCESS-SECRET") String accessSecret
+    @POST("/in-api/support/transfer/query")
+    List<QueryPayoutResult.DataBean> queryPayout(@Header("ACCESS-SECRET") String accessSecret
             , @Header("Content-Type") String contentType
             , @Body QueryPayoutPO queryPayoutPO
-            , @ResponseConvert ClientResponseConverter<List<PayoutResult>> converter);
+            , @ResponseConvert ClientResponseConverter<List<QueryPayoutResult.DataBean>> converter);
 }

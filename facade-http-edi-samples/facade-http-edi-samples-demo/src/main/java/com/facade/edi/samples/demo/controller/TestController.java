@@ -26,7 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/test")
@@ -58,6 +60,8 @@ public class TestController {
 
     @Resource
     PayoutApi payoutApi;
+
+    private static final String PAYOUT_SUCCESS_CODE = "00000";
 
     @GetMapping("/rate")
     public String getRate() {
@@ -105,10 +109,14 @@ public class TestController {
 
     @PostMapping("/payout/query")
     public String queryPayout(@RequestBody QueryPayoutPO queryPayoutPO) {
-        List<QueryPayoutResult> results = this.payoutApi.queryPayout(this.payoutAccessSecret, "application/json", queryPayoutPO, new ClientResponseConverter<List<PayoutResult>>() {
+        List<QueryPayoutResult.DataBean> results = this.payoutApi.queryPayout(this.payoutAccessSecret, "application/json", queryPayoutPO, new ClientResponseConverter<List<QueryPayoutResult.DataBean>>() {
             @Override
-            public List<PayoutResult> convert(String t) throws IOException {
-                return JSONObject.parseObject(t,new TypeReference<List<PayoutResult>>(){});
+            public List<QueryPayoutResult.DataBean> convert(String t) throws IOException {
+                QueryPayoutResult result = JSONObject.parseObject(t,QueryPayoutResult.class);
+                if(null == result || !Objects.equals(PAYOUT_SUCCESS_CODE,result.getCode())) {
+                    return Collections.emptyList();
+                }
+                return result.getData();
             }
         });
         return JSONObject.toJSONString(results);
