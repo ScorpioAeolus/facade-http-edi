@@ -1,6 +1,5 @@
 package com.facade.edi.samples.demo.proxy;
 
-import com.alibaba.fastjson.JSONObject;
 import com.facade.edi.starter.annotation.EdiApi;
 import com.facade.edi.starter.annotation.api.GET;
 import com.facade.edi.starter.annotation.param.Header;
@@ -9,7 +8,6 @@ import com.facade.edi.starter.annotation.param.Query;
 import com.facade.edi.starter.annotation.param.ResponseConvert;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 
-import java.io.IOException;
 
 @EdiApi(hostKey = "currencyapi.host")
 public interface RateApi {
