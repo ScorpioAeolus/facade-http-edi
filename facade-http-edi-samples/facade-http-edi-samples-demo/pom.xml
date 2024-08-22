@@ -24,8 +24,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.facade.edi</groupId>
+            <groupId>io.github.scorpioaeolus</groupId>
             <artifactId>facade-http-edi-starter</artifactId>
+            <version>1.0.0.RELEASE</version>
         </dependency>
     </dependencies>
 </project>
