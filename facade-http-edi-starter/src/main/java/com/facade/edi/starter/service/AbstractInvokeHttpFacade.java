@@ -14,9 +14,6 @@ import java.util.Map;
 /**
  * EDI调用远程http & https接口封装
  *
- * @description <ul>
- *                  <li>1.三方http & https调用封装</li>
- *              </ul>
  *
  * @author Typhoon
  */

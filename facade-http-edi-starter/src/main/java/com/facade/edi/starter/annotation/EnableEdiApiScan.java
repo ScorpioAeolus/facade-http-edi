@@ -25,21 +25,21 @@ public @interface EnableEdiApiScan {
 
     /**
      * 接口扫描路径
-     * @return
+     * @return String[]
      */
     String[] scanBasePackages();
 
     /**
      * 请求客户端类型
      *
-     * @return
+     * @return ClientType
      */
     ClientType clientType() default ClientType.REST_TEMPLATE;
 
     /**
      * 生成代理的模式
      *
-     * @return
+     * @return AdviceMode
      */
     AdviceMode mode() default AdviceMode.PROXY;
 

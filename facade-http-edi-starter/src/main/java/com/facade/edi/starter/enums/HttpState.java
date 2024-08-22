@@ -192,7 +192,6 @@ public enum HttpState {
             return this.value;
         }
 
-        /** @deprecated */
         @Deprecated
         public static HttpState.Series valueOf(HttpState status) {
             return status.series;

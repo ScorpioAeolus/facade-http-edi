@@ -65,11 +65,7 @@ public class OkHttpConfig {
 
         return null;
     }
-
-    /**
-     * Create a new connection pool with tuning parameters appropriate for a single-user application.
-     * The tuning parameters in this pool are subject to change in future OkHttp releases. Currently
-     */
+    
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public ConnectionPool pool() {

@@ -9,13 +9,12 @@ import javax.annotation.Resource;
 
 /**
  * 远程调用接口抽象定义
- * @description <ul>
+ *               <ul>
  *                   <li>它是一个FactoryBean,注入使用时,调用getObject返回真实实例</li>
  *                   <li>实现InitializingBean接口,实例化完成后,使用ApiProxy创建接口实现</li>
  *              </ul>
  * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
  *
- * @param <T>
  */
 @Slf4j
 public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBean {

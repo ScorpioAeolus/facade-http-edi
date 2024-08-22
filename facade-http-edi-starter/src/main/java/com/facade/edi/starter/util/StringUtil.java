@@ -69,9 +69,9 @@ public class StringUtil {
     /**
      * 重复拼接字符串
      *
-     * @param target
-     * @param times
-     * @return
+     * @param target target
+     * @param times times
+     * @return String
      */
     public static final String repeatStr(String target,int times) {
         if(isEmpty(target) || times <= 0) {
@@ -155,11 +155,10 @@ public class StringUtil {
      * 3.计算截取的字符串的字节数是否等于需求长度len，相等则直接返回，不相等，则在resLen的基础上减1再截取，则为需要的结果
      * String的substring是按字符长度截取，可能最后一个字符会是半个字符
      * 转回bytes后判断是否超过长度，是的话，向前再截取1位,防止最后最后一个byte为半个字符的无效字符,舍弃
-     * @param str
-     * @param len
-     * @param charSet
-     * @return
-     * @throws UnsupportedEncodingException
+     * @param str str
+     * @param len length
+     * @param charSet charset
+     * @return String
      */
     public static final String subStrByBytes(String str, int len, String charSet) throws UnsupportedEncodingException {
         if (isEmpty(str)) {
