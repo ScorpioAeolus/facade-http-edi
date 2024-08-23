@@ -15,6 +15,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -39,9 +40,10 @@ import java.util.List;
  * @author typhoon
  */
 @Slf4j
-public class RestTemplateConfig {
+public class EdiRestTemplateConfig {
 
     @Bean
+    @ConditionalOnMissingBean
     public RestTemplate restTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(clientHttpRequestFactory());
@@ -58,6 +60,7 @@ public class RestTemplateConfig {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @ConditionalOnMissingBean
     public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory() {
         try {
             HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();

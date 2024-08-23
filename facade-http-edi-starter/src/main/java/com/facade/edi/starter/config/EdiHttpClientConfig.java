@@ -16,6 +16,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
 
@@ -36,10 +37,11 @@ import java.security.cert.X509Certificate;
  */
 @Slf4j
 //@Configuration
-public class HttpClientConfig {
+public class EdiHttpClientConfig {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @ConditionalOnMissingBean
     public X509TrustManager x509TrustManager() {
         return new X509TrustManager() {
             @Override
@@ -59,6 +61,7 @@ public class HttpClientConfig {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @ConditionalOnMissingBean
     public SSLConnectionSocketFactory sslSocketFactory() {
         try {
             //信任任何链接
@@ -72,6 +75,7 @@ public class HttpClientConfig {
     }
 
     @Bean
+    @ConditionalOnMissingBean(CloseableHttpClient.class)
     public CloseableHttpClient httpClient() {
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
                 .<ConnectionSocketFactory>create()

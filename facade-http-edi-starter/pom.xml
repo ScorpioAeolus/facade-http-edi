@@ -1,15 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.facade.edi</groupId>
-        <artifactId>facade-http-edi</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+<!--    <parent>-->
+<!--        <groupId>com.facade.edi</groupId>-->
+<!--        <artifactId>facade-http-edi</artifactId>-->
+<!--        <version>1.0-SNAPSHOT</version>-->
+<!--    </parent>-->
 
     <groupId>io.github.scorpioaeolus</groupId>
     <artifactId>facade-http-edi-starter</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.2.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>facade-http-edi-starter</name>
@@ -66,33 +66,38 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>${okhttp.version}</version>
+            <version>4.12.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
+            <version>4.5.13</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
+            <version>1.2.83</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
+            <version>19.0</version>
         </dependency>
         <dependency>
             <groupId>io.github.classgraph</groupId>
             <artifactId>classgraph</artifactId>
-            <version>${classgraph.version}</version>
+            <version>4.8.105</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
         </dependency>
     </dependencies>
 

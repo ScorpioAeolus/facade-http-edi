@@ -7,13 +7,11 @@ import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -30,10 +28,11 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 //@Configuration
-public class OkHttpConfig {
+public class EdiOkHttpConfig {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @ConditionalOnMissingBean
     public X509TrustManager x509TrustManager() {
         return new X509TrustManager() {
             @Override
@@ -53,6 +52,7 @@ public class OkHttpConfig {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @ConditionalOnMissingBean
     public SSLSocketFactory sslSocketFactory() {
         try {
             //信任任何链接
@@ -68,11 +68,13 @@ public class OkHttpConfig {
     
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @ConditionalOnMissingBean
     public ConnectionPool pool() {
         return new ConnectionPool(200, 5, TimeUnit.MINUTES);
     }
 
     @Bean("okHttpClient")
+    @ConditionalOnMissingBean
     public OkHttpClient okHttpClient() {
         return new OkHttpClient.Builder()
                 .sslSocketFactory(sslSocketFactory(), x509TrustManager())

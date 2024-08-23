@@ -2,9 +2,9 @@ package com.facade.edi.starter.support;
 
 import com.facade.edi.starter.annotation.EnableEdiApiScan;
 import com.facade.edi.starter.config.EdiClientConfig;
-import com.facade.edi.starter.config.HttpClientConfig;
-import com.facade.edi.starter.config.OkHttpConfig;
-import com.facade.edi.starter.config.RestTemplateConfig;
+import com.facade.edi.starter.config.EdiHttpClientConfig;
+import com.facade.edi.starter.config.EdiOkHttpConfig;
+import com.facade.edi.starter.config.EdiRestTemplateConfig;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -24,19 +24,19 @@ public class EdiConfigurationSelector implements ImportSelector {
             return new String[] {
                     //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
-                    RestTemplateConfig.class.getName()
+                    EdiRestTemplateConfig.class.getName()
             };
         } else if(clientType == EnableEdiApiScan.ClientType.OK_HTTP) {
             return new String[] {
                     //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
-                    OkHttpConfig.class.getName()
+                    EdiOkHttpConfig.class.getName()
             };
         } else if(clientType == EnableEdiApiScan.ClientType.HTTP_CLIENT) {
             return new String[] {
                     //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
-                    HttpClientConfig.class.getName()
+                    EdiHttpClientConfig.class.getName()
             };
         } else {
             throw new UnsupportedOperationException("Unknown clientType: " + clientType);
