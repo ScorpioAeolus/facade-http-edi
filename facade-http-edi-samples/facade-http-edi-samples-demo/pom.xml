@@ -26,7 +26,7 @@
         <dependency>
             <groupId>io.github.scorpioaeolus</groupId>
             <artifactId>facade-http-edi-starter</artifactId>
-            <version>1.0.0.RELEASE</version>
+            <version>1.0.2.RELEASE</version>
         </dependency>
     </dependencies>
 </project>
