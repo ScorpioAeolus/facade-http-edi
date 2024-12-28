@@ -60,6 +60,11 @@ public @interface EnableEdiApiScan {
          */
         OK_HTTP,
 
+        /**
+         * java native http client
+         */
+        NATIVE,
+
         ;
     }
 }

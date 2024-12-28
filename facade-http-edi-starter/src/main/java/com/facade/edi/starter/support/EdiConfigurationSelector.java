@@ -3,6 +3,7 @@ package com.facade.edi.starter.support;
 import com.facade.edi.starter.annotation.EnableEdiApiScan;
 import com.facade.edi.starter.config.EdiClientConfig;
 import com.facade.edi.starter.config.EdiHttpClientConfig;
+import com.facade.edi.starter.config.EdiNativeClientConfig;
 import com.facade.edi.starter.config.EdiOkHttpConfig;
 import com.facade.edi.starter.config.EdiRestTemplateConfig;
 import org.springframework.context.annotation.ImportSelector;
@@ -37,6 +38,11 @@ public class EdiConfigurationSelector implements ImportSelector {
                     //AutoProxyRegistrar.class.getName(),
                     EdiClientConfig.class.getName(),
                     EdiHttpClientConfig.class.getName()
+            };
+        } else if(clientType == EnableEdiApiScan.ClientType.NATIVE) {
+            return new String[] {
+                    EdiClientConfig.class.getName(),
+                    EdiNativeClientConfig.class.getName()
             };
         } else {
             throw new UnsupportedOperationException("Unknown clientType: " + clientType);
