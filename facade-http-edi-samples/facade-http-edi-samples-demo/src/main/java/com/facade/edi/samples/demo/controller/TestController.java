@@ -71,7 +71,7 @@ public class TestController {
 
     @GetMapping("/rate/v2")
     public String getRateV2() {
-        ExchangeRate result = rateApi.getRateV2("AED", "INR", "application/json", this.apiKey, t -> JSONObject.parseObject(t,ExchangeRate.class));
+        ExchangeRate result = rateApi.getRateV2("AED", "INR", "application/json", this.apiKey, t -> JSONObject.parseObject(t, ExchangeRate.class));
         return JSONObject.toJSONString(result);
     }
 

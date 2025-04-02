@@ -22,6 +22,7 @@ import com.facade.edi.starter.annotation.param.Query;
 import com.facade.edi.starter.annotation.param.QueryMap;
 import com.facade.edi.starter.util.EdiUtil;
 import com.facade.edi.starter.annotation.EdiApi;
+import com.facade.edi.starter.util.MapUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -89,9 +90,34 @@ public class RequestFactory {
             handlers[p].apply(request, args[p]);
         }
         request.setHttpMethod(httpMethod);
+        this.assembleFullUrl(request,host,relativeUrl);
         //构造完整url的时候,如果method维度制定了host那么优先使用method的host,否则使用EdiApi指定的host
-        request.setUrl(this.buildFullUrl(null != request.getHost()? request.getHost() : host,relativeUrl));
+        //request.setUrl(this.buildFullUrl(null != request.getHost()? request.getHost() : host,relativeUrl));
         return request;
+    }
+
+    private void assembleFullUrl(HttpApiRequest request, String host, String relativeUrl) {
+        if(null != request.getHost()) {
+            host = request.getHost();
+        }
+        // 移除host末尾的斜杠（如果存在）
+        if (host.endsWith("/")) {
+            host = host.substring(0, host.length() - 1);
+        }
+
+        // 移除uri开头的斜杠（如果存在）
+        if (relativeUrl.startsWith("/")) {
+            relativeUrl = relativeUrl.substring(1);
+        }
+        Map<String,String> pathParam = request.getPathParam();
+        if(MapUtil.isNotEmpty(pathParam)) {
+            for (Map.Entry<String, String> entry : pathParam.entrySet()) {
+                relativeUrl = relativeUrl.replaceAll("\\{" + entry.getKey() + "}", entry.getValue());
+            }
+        }
+        request.setUrl(host + "/" + relativeUrl);
+        // 拼接host和uri
+       // return host + "/" + relativeUrl;
     }
 
     /**
