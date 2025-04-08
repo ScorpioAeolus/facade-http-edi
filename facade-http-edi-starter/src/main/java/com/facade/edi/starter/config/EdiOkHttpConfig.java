@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
+import org.springframework.core.env.Environment;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -74,7 +75,9 @@ public class EdiOkHttpConfig implements ILogInject {
 
     @Bean("okHttpClient")
     @ConditionalOnMissingBean
-    public OkHttpClient okHttpClient() {
+    public OkHttpClient okHttpClient(Environment environment) {
+        long timeout = Long.parseLong(environment.getProperty("edi.timeout", "6000"));
+
         return new OkHttpClient.Builder()
                 .sslSocketFactory(sslSocketFactory(), x509TrustManager())
                 // 忽略所有SSL证书验证
@@ -83,9 +86,9 @@ public class EdiOkHttpConfig implements ILogInject {
                 .retryOnConnectionFailure(false)
                 //连接池
                 .connectionPool(pool())
-                .connectTimeout(10L, TimeUnit.SECONDS)
-                .readTimeout(10L, TimeUnit.SECONDS)
-                .writeTimeout(10L, TimeUnit.SECONDS)
+                .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+                .readTimeout(timeout, TimeUnit.MILLISECONDS)
+                .writeTimeout(timeout, TimeUnit.MILLISECONDS)
                 .build();
     }
 

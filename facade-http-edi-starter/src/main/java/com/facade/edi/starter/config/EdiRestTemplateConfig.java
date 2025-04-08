@@ -18,6 +18,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
+import org.springframework.core.env.Environment;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -27,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -43,14 +45,14 @@ public class EdiRestTemplateConfig implements ILogInject {
 
     @Bean
     @ConditionalOnMissingBean
-    public RestTemplate restTemplate() {
+    public RestTemplate restTemplate(Environment environment) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setRequestFactory(clientHttpRequestFactory());
+        restTemplate.setRequestFactory(clientHttpRequestFactory(environment));
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler());
         List<HttpMessageConverter<?>> list = restTemplate.getMessageConverters();
         for (HttpMessageConverter<?> httpMessageConverter : list) {
             if (httpMessageConverter instanceof StringHttpMessageConverter) {
-                ((StringHttpMessageConverter) httpMessageConverter).setDefaultCharset(Charset.forName("utf-8"));
+                ((StringHttpMessageConverter) httpMessageConverter).setDefaultCharset(StandardCharsets.UTF_8);
                 break;
             }
         }
@@ -60,8 +62,9 @@ public class EdiRestTemplateConfig implements ILogInject {
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     @ConditionalOnMissingBean
-    public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory() {
+    public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory(Environment environment) {
         try {
+            int timeout = Integer.parseInt(environment.getProperty("edi.timeout", "6000"));
             HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
             SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
                 @Override
@@ -92,9 +95,9 @@ public class EdiRestTemplateConfig implements ILogInject {
             HttpComponentsClientHttpRequestFactory clientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory(
                     httpClient);
             // 连接超时
-            clientHttpRequestFactory.setConnectTimeout(60 * 1000);
+            clientHttpRequestFactory.setConnectTimeout(timeout);
             // 数据读取超时时间
-            clientHttpRequestFactory.setReadTimeout(5 * 60 * 1000);
+            clientHttpRequestFactory.setReadTimeout(timeout);
             // 连接不够用的等待时间
             clientHttpRequestFactory.setConnectionRequestTimeout(60 * 1000);
             return clientHttpRequestFactory;

@@ -43,6 +43,13 @@ public @interface EnableEdiApiScan {
      */
     AdviceMode mode() default AdviceMode.PROXY;
 
+    /**
+     * connect and request timeout milliseconds
+     *
+     * @return long
+     */
+    long timeout() default -1L;
+
 
     enum ClientType {
 

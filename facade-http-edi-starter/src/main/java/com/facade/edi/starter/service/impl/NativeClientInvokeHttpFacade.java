@@ -7,6 +7,7 @@ import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import com.facade.edi.starter.util.StringUtil;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
@@ -29,6 +30,9 @@ public class NativeClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
     private final SSLSocketFactory sslSocketFactory;
 
     private static final int CONNECT_TIMEOUT = 60000;
+
+    @Value("${edi.timeout:6000}")
+    private int timeout;
 
     public NativeClientInvokeHttpFacade(SSLSocketFactory sslSocketFactory) {
         super();
@@ -58,8 +62,8 @@ public class NativeClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setUseCaches(false);
-            connection.setReadTimeout(CONNECT_TIMEOUT);
-            connection.setConnectTimeout(CONNECT_TIMEOUT);
+            connection.setReadTimeout(timeout);
+            connection.setConnectTimeout(timeout);
             connection.setRequestProperty("connection", "Keep-Alive");
             this.buildHeaders(connection,request);
             //connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
