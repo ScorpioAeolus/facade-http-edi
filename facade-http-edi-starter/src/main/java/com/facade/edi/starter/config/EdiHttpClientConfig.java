@@ -2,7 +2,7 @@ package com.facade.edi.starter.config;
 
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.HttpClientInvokeHttpFacade;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.MessageConstraints;
 import org.apache.http.config.Registry;
@@ -35,9 +35,8 @@ import java.security.cert.X509Certificate;
  *
  * @author typhoon
  */
-@Slf4j
 //@Configuration
-public class EdiHttpClientConfig {
+public class EdiHttpClientConfig implements ILogInject {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)

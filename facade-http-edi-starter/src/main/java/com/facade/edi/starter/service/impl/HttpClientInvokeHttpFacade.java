@@ -6,7 +6,6 @@ import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import com.facade.edi.starter.util.StringUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -15,14 +14,12 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -36,7 +33,6 @@ import java.util.Map;
  * @author typhoon
  *
  */
-@Slf4j
 public class HttpClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
 
     private CloseableHttpClient httpClient;

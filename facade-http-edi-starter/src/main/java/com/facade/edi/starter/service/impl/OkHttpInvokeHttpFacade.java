@@ -8,7 +8,6 @@ import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import kotlin.Pair;
 import kotlin.text.Charsets;
-import lombok.extern.slf4j.Slf4j;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -33,7 +32,6 @@ import java.util.Objects;
  *
  * @author typhoon
  */
-@Slf4j
 public class OkHttpInvokeHttpFacade extends AbstractInvokeHttpFacade {
 
     private OkHttpClient okHttpClient;

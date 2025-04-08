@@ -2,7 +2,7 @@ package com.facade.edi.starter.config;
 
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.RestTemplateInvokeHttpFacade;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.apache.http.client.HttpClient;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -39,8 +39,7 @@ import java.util.List;
  *
  * @author typhoon
  */
-@Slf4j
-public class EdiRestTemplateConfig {
+public class EdiRestTemplateConfig implements ILogInject {
 
     @Bean
     @ConditionalOnMissingBean

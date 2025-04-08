@@ -6,20 +6,14 @@ import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import com.facade.edi.starter.util.StringUtil;
-import kotlin.Pair;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,7 +22,6 @@ import java.util.Objects;
  *
  * @author typhoon
  */
-@Slf4j
 public class RestTemplateInvokeHttpFacade extends AbstractInvokeHttpFacade {
 
 

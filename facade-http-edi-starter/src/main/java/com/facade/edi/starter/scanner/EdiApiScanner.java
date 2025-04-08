@@ -1,8 +1,8 @@
 package com.facade.edi.starter.scanner;
 
 import com.facade.edi.starter.annotation.EdiApi;
+import com.facade.edi.starter.util.ILogInject;
 import com.google.common.collect.Sets;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.AdviceMode;
@@ -16,8 +16,7 @@ import java.util.Set;
  *
  * @author typhoon
  */
-@Slf4j
-public class EdiApiScanner {
+public class EdiApiScanner implements ILogInject {
 
     private ClassLoader classLoader;
 

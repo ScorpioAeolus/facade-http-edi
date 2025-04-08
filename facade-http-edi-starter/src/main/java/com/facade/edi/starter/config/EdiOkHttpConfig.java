@@ -2,7 +2,7 @@ package com.facade.edi.starter.config;
 
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.OkHttpInvokeHttpFacade;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,9 +26,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author typhoon
  */
-@Slf4j
 //@Configuration
-public class EdiOkHttpConfig {
+public class EdiOkHttpConfig implements ILogInject {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)

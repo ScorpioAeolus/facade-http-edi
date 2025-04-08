@@ -1,6 +1,6 @@
 package com.facade.edi.starter.support;
 
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.AdviceMode;
@@ -16,8 +16,7 @@ import javax.annotation.Resource;
  * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
  *
  */
-@Slf4j
-public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBean {
+public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBean, ILogInject {
 
     private final Class<T> targetClass;
 

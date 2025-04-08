@@ -2,12 +2,9 @@ package com.facade.edi.starter.service;
 
 
 import com.facade.edi.starter.request.HttpApiRequest;
-import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.util.MapUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.Resource;
 import java.net.URI;
 import java.util.Map;
 
@@ -17,7 +14,6 @@ import java.util.Map;
  *
  * @author Typhoon
  */
-@Slf4j
 public abstract  class AbstractInvokeHttpFacade implements IInvokeHttpFacade {
 
     protected static final String BEARER = "Bearer ";

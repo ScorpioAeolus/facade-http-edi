@@ -6,7 +6,6 @@ import com.facade.edi.starter.converter.Converter;
 import com.facade.edi.starter.converter.ConverterFactory;
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.util.StringUtil;
-import lombok.Getter;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
@@ -33,8 +32,11 @@ public class EdiApiProxyFactory {
     private Environment environment;
 
     @Resource
-    @Getter
     IInvokeHttpFacade iInvokeHttpFacade;
+
+    public IInvokeHttpFacade getIInvokeHttpFacade() {
+        return iInvokeHttpFacade;
+    }
 
     public String getHost(Method method) {
         EdiApi ediApi = method.getDeclaringClass().getAnnotation(EdiApi.class);

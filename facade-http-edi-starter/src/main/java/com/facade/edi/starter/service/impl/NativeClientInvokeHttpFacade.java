@@ -6,7 +6,6 @@ import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import com.facade.edi.starter.util.StringUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -25,7 +24,6 @@ import java.util.Map;
  * @author typhoon
  *
  */
-@Slf4j
 public class NativeClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
 
     private final SSLSocketFactory sslSocketFactory;

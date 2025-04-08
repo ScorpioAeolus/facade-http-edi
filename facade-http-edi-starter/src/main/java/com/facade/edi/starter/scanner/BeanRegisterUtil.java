@@ -1,7 +1,7 @@
 package com.facade.edi.starter.scanner;
 
 import com.facade.edi.starter.support.EdiServiceFactoryBean;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -18,8 +18,7 @@ import java.util.Set;
  *
  * @author typhoon
  */
-@Slf4j
-public class BeanRegisterUtil {
+public class BeanRegisterUtil implements ILogInject {
 
     public static void registerBeanDefinitions(Set<BeanDefinitionHolder> beanDefHolders, BeanDefinitionRegistry registry) {
         if (CollectionUtils.isEmpty(beanDefHolders)) {

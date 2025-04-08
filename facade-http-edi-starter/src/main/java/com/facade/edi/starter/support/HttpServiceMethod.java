@@ -8,7 +8,7 @@ import com.facade.edi.starter.converter.Converter;
 import com.facade.edi.starter.request.HttpApiRequest;
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.util.EdiUtil;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -20,8 +20,7 @@ import java.lang.reflect.Type;
  *
  * @author Typhoon
  */
-@Slf4j
-public class HttpServiceMethod {
+public class HttpServiceMethod implements ILogInject {
     private final RequestFactory requestFactory;
     private final Converter<String, ?> responseConverter;
     private final IInvokeHttpFacade iInvokeHttpFacade;
