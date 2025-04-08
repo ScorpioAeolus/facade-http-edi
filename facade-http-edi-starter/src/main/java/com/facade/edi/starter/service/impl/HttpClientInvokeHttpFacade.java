@@ -7,7 +7,6 @@ import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import com.facade.edi.starter.util.StringUtil;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
