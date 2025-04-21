@@ -9,7 +9,7 @@
 
     <groupId>io.github.scorpioaeolus</groupId>
     <artifactId>facade-http-edi-starter</artifactId>
-    <version>1.0.5.RELEASE</version>
+    <version>1.0.6.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>facade-http-edi-starter</name>
