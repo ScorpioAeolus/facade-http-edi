@@ -26,7 +26,8 @@ public class EdiApiRegistrar implements ImportBeanDefinitionRegistrar {
             throw new RuntimeException("开启EDI需要指定扫描路径");
         }
         AdviceMode mode =  (AdviceMode) attributes.get("mode");
-        EdiApiScanner scanner = new EdiApiScanner(registry,mode);
+        boolean preheat = attributes.getBoolean("preheat");
+        EdiApiScanner scanner = new EdiApiScanner(registry,mode,preheat);
         scanner.scan(basePackages);
     }
 

@@ -9,11 +9,11 @@
 
     <groupId>io.github.scorpioaeolus</groupId>
     <artifactId>facade-http-edi-starter</artifactId>
-    <version>1.0.6.RELEASE</version>
+    <version>1.0.7.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>facade-http-edi-starter</name>
-    <description>dcs-scheduler</description>
+    <description>facade-http-edi-starter</description>
     <url>https://github.com/ScorpioAeolus/facade-http-edi</url>
 
 

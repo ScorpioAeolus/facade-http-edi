@@ -57,6 +57,17 @@ public class RestTemplateInvokeHttpFacade extends AbstractInvokeHttpFacade {
         return resp;
     }
 
+    @Override
+    public void preheat(String host) {
+        log.info("RestTemplateInvokeHttpFacade.preheat trigger preheat;host={}",host);
+        // 发送简单的HEAD请求进行预热
+        try {
+            this.restTemplate.headForHeaders(host);
+        } catch (Exception e) {
+            log.error("RestTemplateInvokeHttpFacade.preheat failed,please ignore...,host={}",host);
+        }
+    }
+
     private HttpEntity<?> processRequestBody(HttpHeaders headers, HttpApiRequest request) {
 
         if(StringUtil.isNotBlank(request.getBody())) {

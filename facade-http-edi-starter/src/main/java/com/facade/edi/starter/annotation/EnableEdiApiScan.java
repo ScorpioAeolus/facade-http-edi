@@ -50,6 +50,14 @@ public @interface EnableEdiApiScan {
      */
     long timeout() default -1L;
 
+    /**
+     * 是否开启连接池预热;解决首次请求比较慢的问题
+     *
+     *
+     * @return boolean
+     */
+    boolean preheat() default false;
+
 
     enum ClientType {
 

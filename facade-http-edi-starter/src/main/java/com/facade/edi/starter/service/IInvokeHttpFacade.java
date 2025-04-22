@@ -17,6 +17,14 @@ public interface IInvokeHttpFacade extends ILogInject {
 
     HttpApiResponse invoke(HttpApiRequest request);
 
+    /**
+     * 预热
+     *
+     * @param host 请求主机
+     * return void
+     */
+    void preheat(String host);
+
     default void checkParam(HttpApiRequest request) {
         ParameterChecker.notNull(request,"request");
     }

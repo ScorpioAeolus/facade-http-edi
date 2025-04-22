@@ -13,12 +13,14 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -69,6 +71,21 @@ public class HttpClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
             IOUtils.closeQuietly(response);
         }
         return resp;
+    }
+
+    @Override
+    public void preheat(String host) {
+        log.info("HttpClientInvokeHttpFacade.preheat trigger preheat;host={}",host);
+        HttpHead httpHead = new HttpHead(host);
+        CloseableHttpResponse response = null;
+        try {
+            response = this.httpClient.execute(httpHead);
+        } catch (IOException e) {
+            log.error("HttpClientInvokeHttpFacade.preheat failed,please ignore...,host={}",host);
+        } finally {
+            IOUtils.closeQuietly(response);
+        }
+
     }
 
     private HttpEntityEnclosingRequestBase buildRequest(HttpApiRequest request) throws UnsupportedEncodingException {

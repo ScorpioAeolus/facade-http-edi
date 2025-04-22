@@ -18,8 +18,10 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpMethod;
+import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -84,6 +86,25 @@ public class OkHttpInvokeHttpFacade extends AbstractInvokeHttpFacade {
             }
         }
         return resp;
+    }
+
+    @Override
+    public void preheat(String host) {
+        log.info("OkHttpInvokeHttpFacade.preheat trigger preheat;host={}",host);
+        Request request = new Request.Builder()
+                .url(host)
+                .head()
+                .build();
+        // 使用 HEAD 请求，减少数据传输
+        Response response = null;
+        try {
+             response =this.okHttpClient.newCall(request)
+                    .execute();
+        } catch (Exception e) {
+            log.error("OkHttpInvokeHttpFacade.preheat failed,please ignore...,host={}",host);
+        } finally {
+            IOUtils.closeQuietly(response);
+        }
     }
 
     private Headers processRequestHeader(HttpApiRequest request) {

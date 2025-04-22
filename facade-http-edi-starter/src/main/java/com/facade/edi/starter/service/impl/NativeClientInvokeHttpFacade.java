@@ -112,6 +112,40 @@ public class NativeClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
         return resp;
     }
 
+    @Override
+    public void preheat(String host) {
+        log.info("NativeClientInvokeHttpFacade.preheat trigger preheat;host={}",host);
+        HttpURLConnection connection = null;
+        try {
+            URL url = new URL(host);
+            connection = (HttpURLConnection) url.openConnection();
+            // 设置请求方法为 HEAD 减少数据传输
+            // trust-https
+            boolean useHttps = host.startsWith("https");
+            if (useHttps) {
+                HttpsURLConnection https = (HttpsURLConnection) connection;
+                https.setSSLSocketFactory(sslSocketFactory);
+            }
+            // connection setting
+            connection.setRequestMethod("HEAD");
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setUseCaches(false);
+            connection.setReadTimeout(timeout);
+            connection.setConnectTimeout(timeout);
+            connection.setRequestProperty("connection", "Keep-Alive");
+
+            connection.getResponseCode();
+        } catch (Exception e) {
+            log.info("NativeClientInvokeHttpFacade.preheat trigger preheat;host={}",host);
+        } finally {
+            if (null != connection) {
+                connection.disconnect();
+            }
+        }
+
+    }
+
     private void buildHeaders(HttpURLConnection connection, HttpApiRequest request) {
         if(MapUtil.isNotEmpty(request.getHeaders())) {
             for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
@@ -132,10 +166,14 @@ public class NativeClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
                 builder.append("&");
             }
             for (Map.Entry<String, String> entry : params.entrySet()) {
-                builder.append(entry.getKey()).append(entry.getValue());
+                builder.append(entry.getKey())
+                        .append("=")
+                        .append(entry.getValue())
+                        .append("&");
             }
-            uri = uri + builder;
+            uri = uri + builder.substring(0,builder.length() - 1);
         }
+
         return new URL(uri);
     }
 

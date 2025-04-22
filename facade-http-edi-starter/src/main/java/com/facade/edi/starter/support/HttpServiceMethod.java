@@ -87,5 +87,13 @@ public class HttpServiceMethod implements ILogInject {
         }
     }
 
+    public void preheat() {
+        if(null == this.host) {
+            log.warn("HttpServiceMethod.preheat api dimension host is null,do not trigger preheat,");
+            return;
+        }
+        this.iInvokeHttpFacade.preheat(this.host);
+    }
+
 
 }

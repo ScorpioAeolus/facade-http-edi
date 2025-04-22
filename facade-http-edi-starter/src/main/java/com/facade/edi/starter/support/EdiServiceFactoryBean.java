@@ -22,13 +22,16 @@ public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBea
 
     private final AdviceMode adviceMode;
 
+    private final boolean preheat;
+
     @Resource
     private EdiApiProxyFactory ediApiProxyFactory;
 
 
-    public EdiServiceFactoryBean(Class<T> targetClass,AdviceMode adviceMode) {
+    public EdiServiceFactoryBean(Class<T> targetClass,AdviceMode adviceMode,boolean preheat) {
         this.targetClass = targetClass;
         this.adviceMode = adviceMode;
+        this.preheat = preheat;
     }
 
     @Override
@@ -37,9 +40,9 @@ public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBea
             throw new NullPointerException("class is null");
         }
         if(AdviceMode.ASPECTJ == this.adviceMode) {
-            return this.ediApiProxyFactory.newCglibInstance(targetClass);
+            return this.ediApiProxyFactory.newCglibInstance(targetClass,preheat);
         }
-        return this.ediApiProxyFactory.newInstance(targetClass);
+        return this.ediApiProxyFactory.newInstance(targetClass,preheat);
         //log.info(targetClass.getName() + "  edi api build success!!!");
     }
 

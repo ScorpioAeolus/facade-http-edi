@@ -59,8 +59,8 @@ public class EdiApiProxyFactory {
         return converterFactory.responseBodyConverter(type);
     }
 
-    public <T> T newInstance(final Class<T> service) {
-        validateServiceInterface(service);
+    public <T> T newInstance(final Class<T> service,final boolean preheat) {
+        validateServiceInterface(service,preheat);
         return (T)
                 Proxy.newProxyInstance(
                         service.getClassLoader(),
@@ -84,9 +84,10 @@ public class EdiApiProxyFactory {
      * 远程API调用必须定义成接口
      * 加载接口方法到本地缓存
      *
-     * @param service
+     * @param service api
+     * @param preheat need preheat or not
      */
-    private void validateServiceInterface(Class<?> service) {
+    private void validateServiceInterface(Class<?> service,boolean preheat) {
         if (!service.isInterface()) {
             throw new IllegalArgumentException("API declarations must be interfaces.");
         }
@@ -108,7 +109,10 @@ public class EdiApiProxyFactory {
 
         for (Method method : service.getDeclaredMethods()) {
             if (!method.isDefault() && !Modifier.isStatic(method.getModifiers())) {
-                loadServiceMethod(this, method);
+                HttpServiceMethod serviceMethod = loadServiceMethod(this, method);
+                if(preheat) {
+                    serviceMethod.preheat();
+                }
             }
         }
     }
@@ -129,8 +133,8 @@ public class EdiApiProxyFactory {
         return result;
     }
 
-    public <T> T newCglibInstance(Class<T> targetClass) {
-        validateServiceInterface(targetClass);
+    public <T> T newCglibInstance(Class<T> targetClass,boolean preheat) {
+        validateServiceInterface(targetClass,preheat);
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(targetClass);
         enhancer.setCallback(new MethodInterceptor() {
