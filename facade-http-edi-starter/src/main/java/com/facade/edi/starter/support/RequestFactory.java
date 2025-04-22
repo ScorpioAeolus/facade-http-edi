@@ -23,7 +23,6 @@ import com.facade.edi.starter.annotation.param.QueryMap;
 import com.facade.edi.starter.util.EdiUtil;
 import com.facade.edi.starter.annotation.EdiApi;
 import com.facade.edi.starter.util.MapUtil;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -41,7 +40,6 @@ import static com.facade.edi.starter.util.EdiUtil.getRawType;
 import static com.facade.edi.starter.util.EdiUtil.getSupertype;
 import static com.facade.edi.starter.util.EdiUtil.parameterError;
 
-@Slf4j
 public class RequestFactory {
     public static RequestFactory parseAnnotations(Method method, EdiApiProxyFactory apiProxyFactory) {
         return new Builder(method, apiProxyFactory).build();

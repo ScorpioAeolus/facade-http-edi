@@ -1,12 +1,17 @@
 package com.facade.edi.starter.support;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Map;
 
-@Getter
-@Setter
+
 public class ResponseHeader {
     private Map<String,String> responseHeader;
+
+    public Map<String, String> getResponseHeader() {
+        return responseHeader;
+    }
+
+    public void setResponseHeader(Map<String, String> responseHeader) {
+        this.responseHeader = responseHeader;
+    }
 }

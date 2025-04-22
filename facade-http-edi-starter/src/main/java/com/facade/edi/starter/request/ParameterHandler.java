@@ -6,7 +6,7 @@ import com.facade.edi.starter.constants.EntityError;
 import com.facade.edi.starter.converter.ClientResponseConverter;
 import com.facade.edi.starter.converter.Converter;
 import com.facade.edi.starter.exception.EdiException;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -17,8 +17,7 @@ import java.util.Objects;
 import static com.facade.edi.starter.util.EdiUtil.parameterError;
 
 
-@Slf4j
-public abstract class ParameterHandler<T> {
+public abstract class ParameterHandler<T> implements ILogInject {
     public abstract void apply(HttpApiRequest httpApiRequest, T value) throws IOException;
 
     public final ParameterHandler<Iterable<T>> iterable() {

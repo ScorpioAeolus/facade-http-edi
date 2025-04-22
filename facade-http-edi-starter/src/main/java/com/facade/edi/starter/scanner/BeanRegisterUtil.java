@@ -1,7 +1,7 @@
 package com.facade.edi.starter.scanner;
 
 import com.facade.edi.starter.support.EdiServiceFactoryBean;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -18,8 +18,7 @@ import java.util.Set;
  *
  * @author typhoon
  */
-@Slf4j
-public class BeanRegisterUtil {
+public class BeanRegisterUtil implements ILogInject {
 
     public static void registerBeanDefinitions(Set<BeanDefinitionHolder> beanDefHolders, BeanDefinitionRegistry registry) {
         if (CollectionUtils.isEmpty(beanDefHolders)) {
@@ -34,24 +33,25 @@ public class BeanRegisterUtil {
         }
     }
 
-    public static BeanDefinitionHolder createSpiFactoryBeanBeanDefinitionHolder(Class<?> spiClass, AdviceMode adviceMode) {
+    public static BeanDefinitionHolder createEdiFactoryBeanBeanDefinitionHolder(Class<?> ediClass, AdviceMode adviceMode,boolean preheat) {
         GenericBeanDefinition beanDef = new GenericBeanDefinition();
         beanDef.setBeanClass(EdiServiceFactoryBean.class);
-        beanDef.getConstructorArgumentValues().addGenericArgumentValue(spiClass);
+        beanDef.getConstructorArgumentValues().addGenericArgumentValue(ediClass);
         beanDef.getConstructorArgumentValues().addGenericArgumentValue(adviceMode);
-        String beanName = generateSpiFactoryBeanName(spiClass);
+        beanDef.getConstructorArgumentValues().addGenericArgumentValue(preheat);
+        String beanName = generateEdiFactoryBeanName(ediClass);
         log.info("edi-api-bean created. bean name: {}, bean class: {}, edi interface: {}.",
-                beanName, EdiServiceFactoryBean.class.getName(), spiClass.getName());
+                beanName, EdiServiceFactoryBean.class.getName(), ediClass.getName());
         return new BeanDefinitionHolder(beanDef, beanName);
     }
 
-    private static String generateSpiFactoryBeanName(Class<?> ediClass) {
+    private static String generateEdiFactoryBeanName(Class<?> ediClass) {
 
         return BeanRegisterUtil.generateDefaultBeanName(ediClass);
     }
 
-    private static String generateDefaultBeanName(Class<?> spiClass) {
-        final String shortClassName = ClassUtils.getShortName(spiClass);
+    private static String generateDefaultBeanName(Class<?> ediClass) {
+        final String shortClassName = ClassUtils.getShortName(ediClass);
         return Introspector.decapitalize(shortClassName);
     }
 

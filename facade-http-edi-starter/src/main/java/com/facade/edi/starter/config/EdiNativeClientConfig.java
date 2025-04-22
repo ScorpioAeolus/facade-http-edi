@@ -2,7 +2,7 @@ package com.facade.edi.starter.config;
 
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.NativeClientInvokeHttpFacade;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +21,7 @@ import java.security.cert.X509Certificate;
  *
  * @author typhoon
  */
-@Slf4j
-public class EdiNativeClientConfig {
+public class EdiNativeClientConfig implements ILogInject {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)

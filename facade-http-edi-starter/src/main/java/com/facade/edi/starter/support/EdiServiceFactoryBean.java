@@ -1,6 +1,6 @@
 package com.facade.edi.starter.support;
 
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.AdviceMode;
@@ -16,20 +16,22 @@ import javax.annotation.Resource;
  * @see org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor
  *
  */
-@Slf4j
-public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBean {
+public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBean, ILogInject {
 
     private final Class<T> targetClass;
 
     private final AdviceMode adviceMode;
 
+    private final boolean preheat;
+
     @Resource
     private EdiApiProxyFactory ediApiProxyFactory;
 
 
-    public EdiServiceFactoryBean(Class<T> targetClass,AdviceMode adviceMode) {
+    public EdiServiceFactoryBean(Class<T> targetClass,AdviceMode adviceMode,boolean preheat) {
         this.targetClass = targetClass;
         this.adviceMode = adviceMode;
+        this.preheat = preheat;
     }
 
     @Override
@@ -38,9 +40,9 @@ public class EdiServiceFactoryBean<T> implements FactoryBean<T>, InitializingBea
             throw new NullPointerException("class is null");
         }
         if(AdviceMode.ASPECTJ == this.adviceMode) {
-            return this.ediApiProxyFactory.newCglibInstance(targetClass);
+            return this.ediApiProxyFactory.newCglibInstance(targetClass,preheat);
         }
-        return this.ediApiProxyFactory.newInstance(targetClass);
+        return this.ediApiProxyFactory.newInstance(targetClass,preheat);
         //log.info(targetClass.getName() + "  edi api build success!!!");
     }
 

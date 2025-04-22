@@ -4,6 +4,7 @@ package com.facade.edi.starter.service;
 import com.facade.edi.starter.annotation.EnableEdiApiScan;
 import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.request.HttpApiRequest;
+import com.facade.edi.starter.util.ILogInject;
 import com.facade.edi.starter.util.ParameterChecker;
 
 /**
@@ -11,10 +12,18 @@ import com.facade.edi.starter.util.ParameterChecker;
  *
  * @author Typhoon
  */
-public interface IInvokeHttpFacade {
+public interface IInvokeHttpFacade extends ILogInject {
 
 
     HttpApiResponse invoke(HttpApiRequest request);
+
+    /**
+     * 预热
+     *
+     * @param host 请求主机
+     * return void
+     */
+    void preheat(String host);
 
     default void checkParam(HttpApiRequest request) {
         ParameterChecker.notNull(request,"request");

@@ -2,7 +2,8 @@ package com.facade.edi.starter.config;
 
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.HttpClientInvokeHttpFacade;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.MessageConstraints;
 import org.apache.http.config.Registry;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
+import org.springframework.core.env.Environment;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -35,9 +37,7 @@ import java.security.cert.X509Certificate;
  *
  * @author typhoon
  */
-@Slf4j
-//@Configuration
-public class EdiHttpClientConfig {
+public class EdiHttpClientConfig implements ILogInject {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
@@ -76,7 +76,7 @@ public class EdiHttpClientConfig {
 
     @Bean
     @ConditionalOnMissingBean(CloseableHttpClient.class)
-    public CloseableHttpClient httpClient() {
+    public CloseableHttpClient httpClient(Environment environment) {
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
                 .<ConnectionSocketFactory>create()
                 .register("https", sslSocketFactory())
@@ -101,9 +101,17 @@ public class EdiHttpClientConfig {
         connManager.setDefaultConnectionConfig(connectionConfig);
         connManager.setMaxTotal(200);
         connManager.setDefaultMaxPerRoute(100);
+        int timeout = Integer.parseInt(environment.getProperty("edi.timeout", "6000"));
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(timeout)          // 连接超时：5秒
+                .setSocketTimeout(timeout)          // Socket 超时：10秒
+                .setConnectionRequestTimeout(timeout) // 连接池获取连接超时：3秒
+                .build();
 
         return HttpClients.custom()
                 .setConnectionManager(connManager)
+                .setDefaultRequestConfig(requestConfig)
                 .build();
     }
 

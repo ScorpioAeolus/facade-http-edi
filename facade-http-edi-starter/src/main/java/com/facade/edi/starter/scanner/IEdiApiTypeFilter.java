@@ -4,7 +4,7 @@ package com.facade.edi.starter.scanner;
 import com.facade.edi.starter.annotation.EdiApi;
 
 /**
- * spi类型过滤器
+ * edi类型过滤器
  *
  * @author typhoon
  */

@@ -1,8 +1,5 @@
 package com.facade.edi.starter.constants;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -12,14 +9,17 @@ import java.io.Serializable;
  * @author typhoon
  * @since V2.0.0
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class EntityError implements Serializable, IError {
 
+    private static final long serialVersionUID = -1L;
     protected int code;
 
     protected String msg;
+
+    public EntityError(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
 
     public static final EntityError SUCCESS = new EntityError(0, "success");
     public static final EntityError IP_LIMIT = new EntityError(400, "IP limited");
@@ -41,5 +41,13 @@ public class EntityError implements Serializable, IError {
     public static final EntityError RESPONSE_CONVERTER_TYPE_ILLEGAL      = new EntityError(513,"response converter type illegal");
 
 
+    @Override
+    public int getCode() {
+        return this.code;
+    }
 
+    @Override
+    public String getMsg() {
+        return this.msg;
+    }
 }

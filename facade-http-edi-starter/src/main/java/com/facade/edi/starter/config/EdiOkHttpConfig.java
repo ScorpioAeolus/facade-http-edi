@@ -2,7 +2,7 @@ package com.facade.edi.starter.config;
 
 import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.OkHttpInvokeHttpFacade;
-import lombok.extern.slf4j.Slf4j;
+import com.facade.edi.starter.util.ILogInject;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Role;
+import org.springframework.core.env.Environment;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -26,9 +27,8 @@ import java.util.concurrent.TimeUnit;
  *
  * @author typhoon
  */
-@Slf4j
 //@Configuration
-public class EdiOkHttpConfig {
+public class EdiOkHttpConfig implements ILogInject {
 
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
@@ -75,7 +75,9 @@ public class EdiOkHttpConfig {
 
     @Bean("okHttpClient")
     @ConditionalOnMissingBean
-    public OkHttpClient okHttpClient() {
+    public OkHttpClient okHttpClient(Environment environment) {
+        long timeout = Long.parseLong(environment.getProperty("edi.timeout", "6000"));
+
         return new OkHttpClient.Builder()
                 .sslSocketFactory(sslSocketFactory(), x509TrustManager())
                 // 忽略所有SSL证书验证
@@ -84,9 +86,9 @@ public class EdiOkHttpConfig {
                 .retryOnConnectionFailure(false)
                 //连接池
                 .connectionPool(pool())
-                .connectTimeout(10L, TimeUnit.SECONDS)
-                .readTimeout(10L, TimeUnit.SECONDS)
-                .writeTimeout(10L, TimeUnit.SECONDS)
+                .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+                .readTimeout(timeout, TimeUnit.MILLISECONDS)
+                .writeTimeout(timeout, TimeUnit.MILLISECONDS)
                 .build();
     }
 

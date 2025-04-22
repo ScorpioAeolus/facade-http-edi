@@ -3,7 +3,6 @@ package com.facade.edi.starter.scanner;
 import com.facade.edi.starter.util.CollectionUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import lombok.Getter;
 
 import java.util.List;
 import java.util.Set;
@@ -13,12 +12,19 @@ import java.util.Set;
  *
  * @author typhoon
  */
-@Getter
 public abstract class AbstractClassCandidateScanner implements IClassCandidateScanner {
 
     private List<ClassLoader> classLoaders;
 
     private List<IClassTypeFilter> classTypeFilters;
+
+    public List<ClassLoader> getClassLoaders() {
+        return classLoaders;
+    }
+
+    public List<IClassTypeFilter> getClassTypeFilters() {
+        return classTypeFilters;
+    }
 
     public void addClassLoader(ClassLoader classLoader) {
         if (classLoader == null) {

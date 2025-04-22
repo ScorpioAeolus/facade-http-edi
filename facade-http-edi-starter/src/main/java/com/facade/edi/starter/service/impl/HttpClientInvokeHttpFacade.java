@@ -6,16 +6,14 @@ import com.facade.edi.starter.response.HttpApiResponse;
 import com.facade.edi.starter.service.AbstractInvokeHttpFacade;
 import com.facade.edi.starter.util.MapUtil;
 import com.facade.edi.starter.util.StringUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -36,7 +34,6 @@ import java.util.Map;
  * @author typhoon
  *
  */
-@Slf4j
 public class HttpClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
 
     private CloseableHttpClient httpClient;
@@ -74,6 +71,21 @@ public class HttpClientInvokeHttpFacade extends AbstractInvokeHttpFacade {
             IOUtils.closeQuietly(response);
         }
         return resp;
+    }
+
+    @Override
+    public void preheat(String host) {
+        log.info("HttpClientInvokeHttpFacade.preheat trigger preheat;host={}",host);
+        HttpHead httpHead = new HttpHead(host);
+        CloseableHttpResponse response = null;
+        try {
+            response = this.httpClient.execute(httpHead);
+        } catch (IOException e) {
+            log.error("HttpClientInvokeHttpFacade.preheat failed,please ignore...,host={}",host);
+        } finally {
+            IOUtils.closeQuietly(response);
+        }
+
     }
 
     private HttpEntityEnclosingRequestBase buildRequest(HttpApiRequest request) throws UnsupportedEncodingException {
