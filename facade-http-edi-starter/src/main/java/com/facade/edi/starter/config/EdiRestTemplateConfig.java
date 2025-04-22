@@ -90,8 +90,6 @@ public class EdiRestTemplateConfig implements ILogInject {
             poolingHttpClientConnectionManager.setDefaultMaxPerRoute(1000);
             httpClientBuilder.setConnectionManager(poolingHttpClientConnectionManager);
 
-            this.preheatConnections(poolingHttpClientConnectionManager);
-
            /* // 重试次数
             httpClientBuilder.setRetryHandler(defaultHttpRequestRetryHandler);*/
             HttpClient httpClient = httpClientBuilder.build();
@@ -109,19 +107,6 @@ public class EdiRestTemplateConfig implements ILogInject {
             log.error("初始化HTTP连接池出错", e);
         }
         return null;
-    }
-
-    private void preheatConnections(PoolingHttpClientConnectionManager connectionManager) {
-        log.info("EdiRestTemplateConfig.preheatConnections connection pool preheat;default preheat count={}",10);
-        // 主动初始化连接
-        for (int i = 0; i < 10; i++) {
-            try {
-                // 打开一个到目标服务器的连接
-                connectionManager.requestConnection(null, null).get(1, TimeUnit.SECONDS);
-            } catch (Exception e) {
-                log.error("EdiRestTemplateConfig.preheatConnections occur error",e);
-            }
-        }
     }
 
     @Bean
