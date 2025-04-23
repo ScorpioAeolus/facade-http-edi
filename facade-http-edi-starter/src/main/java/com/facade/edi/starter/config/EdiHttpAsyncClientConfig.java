@@ -4,13 +4,18 @@ import com.facade.edi.starter.service.IInvokeHttpFacade;
 import com.facade.edi.starter.service.impl.HttpAsyncClientInvokeHttpFacade;
 import com.facade.edi.starter.util.ILogInject;
 import org.apache.http.Consts;
+import org.apache.http.HeaderElement;
+import org.apache.http.HeaderElementIterator;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.ConnectionKeepAliveStrategy;
 import org.apache.http.conn.DnsResolver;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
 import org.apache.http.impl.conn.SystemDefaultDnsResolver;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
@@ -20,6 +25,7 @@ import org.apache.http.impl.nio.conn.ManagedNHttpClientConnectionFactory;
 import org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager;
 import org.apache.http.impl.nio.reactor.DefaultConnectingIOReactor;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
+import org.apache.http.message.BasicHeaderElementIterator;
 import org.apache.http.nio.conn.ManagedNHttpClientConnection;
 import org.apache.http.nio.conn.NHttpConnectionFactory;
 import org.apache.http.nio.conn.NoopIOSessionStrategy;
@@ -28,6 +34,8 @@ import org.apache.http.nio.conn.ssl.SSLIOSessionStrategy;
 import org.apache.http.nio.reactor.ConnectingIOReactor;
 import org.apache.http.nio.reactor.IOReactorException;
 import org.apache.http.nio.util.HeapByteBufferAllocator;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -76,7 +84,9 @@ public class EdiHttpAsyncClientConfig implements ILogInject {
     public CloseableHttpAsyncClient httpAsyncClient(Environment environment) {
 
         NHttpConnectionFactory<ManagedNHttpClientConnection> connFactory = new ManagedNHttpClientConnectionFactory(
-                DefaultHttpRequestWriterFactory.INSTANCE, DefaultHttpResponseParserFactory.INSTANCE, HeapByteBufferAllocator.INSTANCE);
+                DefaultHttpRequestWriterFactory.INSTANCE
+                , DefaultHttpResponseParserFactory.INSTANCE
+                , HeapByteBufferAllocator.INSTANCE);
 
 
         Registry<SchemeIOSessionStrategy> sessionStrategyRegistry = RegistryBuilder.<SchemeIOSessionStrategy>create()
@@ -84,10 +94,12 @@ public class EdiHttpAsyncClientConfig implements ILogInject {
                 .register("https", new SSLIOSessionStrategy(sslContext(), NoopHostnameVerifier.INSTANCE))
                 .build();
 
+        int timeout = Integer.parseInt(environment.getProperty("edi.timeout", "6000"));
+
         IOReactorConfig ioReactorConfig = IOReactorConfig.custom()
-                .setIoThreadCount(Runtime.getRuntime().availableProcessors())
-                .setConnectTimeout(30000)
-                .setSoTimeout(30000)
+                .setIoThreadCount(Runtime.getRuntime().availableProcessors() * 2)
+                .setConnectTimeout(timeout)
+                .setSoTimeout(timeout)
                 .build();
         DnsResolver dnsResolver = SystemDefaultDnsResolver.INSTANCE;
 
@@ -113,7 +125,6 @@ public class EdiHttpAsyncClientConfig implements ILogInject {
 
         connManager.setMaxTotal(200);
         connManager.setDefaultMaxPerRoute(100);
-        int timeout = Integer.parseInt(environment.getProperty("edi.timeout", "6000"));
 
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setCookieSpec(CookieSpecs.DEFAULT)
@@ -122,10 +133,29 @@ public class EdiHttpAsyncClientConfig implements ILogInject {
                 .setExpectContinueEnabled(true)
                 .build();
 
+        // 自定义 Keep-Alive 策略
+        ConnectionKeepAliveStrategy keepAliveStrategy = (response, context) -> {
+            HeaderElementIterator it = new BasicHeaderElementIterator(
+                    response.headerIterator(HTTP.CONN_KEEP_ALIVE));
+            while (it.hasNext()) {
+                HeaderElement he = it.nextElement();
+                String param = he.getName();
+                String value = he.getValue();
+                if (value != null && param.equalsIgnoreCase("timeout")) {
+                    try {
+                        return Long.parseLong(value) * 1000; // 转换为毫秒
+                    } catch (NumberFormatException ignore) {
+                    }
+                }
+            }
+            return 30 * 1000; // 默认 Keep-Alive 时间为 30 秒
+        };
+
         // Create an HttpClientUtils with the given custom dependencies and configuration.
         return HttpAsyncClients.custom()
                 .setConnectionManager(connManager)
                 .setDefaultRequestConfig(defaultRequestConfig)
+                .setKeepAliveStrategy(keepAliveStrategy)
                 .build();
 
     }
