@@ -2,10 +2,12 @@ package com.facade.edi.starter.support;
 
 import com.facade.edi.starter.annotation.EnableEdiApiScan;
 import com.facade.edi.starter.config.EdiClientConfig;
+import com.facade.edi.starter.config.EdiHttpAsyncClientConfig;
 import com.facade.edi.starter.config.EdiHttpClientConfig;
 import com.facade.edi.starter.config.EdiNativeClientConfig;
 import com.facade.edi.starter.config.EdiOkHttpConfig;
 import com.facade.edi.starter.config.EdiRestTemplateConfig;
+import com.facade.edi.starter.config.EdiWebfluxClientConfig;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -66,7 +68,17 @@ public class EdiConfigurationSelector implements ImportSelector, EnvironmentAwar
                     EdiClientConfig.class.getName(),
                     EdiNativeClientConfig.class.getName()
             };
-        } else {
+        } else if(clientType == EnableEdiApiScan.ClientType.HTTP_ASYNC_CLIENT) {
+            return new String[]{
+                    EdiClientConfig.class.getName(),
+                    EdiHttpAsyncClientConfig.class.getName()
+            };
+        } else if(clientType == EnableEdiApiScan.ClientType.WEB_CLIENT) {
+            return new String[]{
+                    EdiClientConfig.class.getName(),
+                    EdiWebfluxClientConfig.class.getName()
+            };
+        }  else {
             throw new UnsupportedOperationException("Unknown clientType: " + clientType);
         }
     }

@@ -80,6 +80,17 @@ public @interface EnableEdiApiScan {
          */
         NATIVE,
 
+        /**
+         * webflux webClient
+         */
+        WEB_CLIENT,
+
+        /**
+         * apache http async client
+         *
+         */
+        HTTP_ASYNC_CLIENT,
+
         ;
     }
 }
