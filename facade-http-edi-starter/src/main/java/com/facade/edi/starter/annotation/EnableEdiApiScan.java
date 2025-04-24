@@ -91,6 +91,12 @@ public @interface EnableEdiApiScan {
          */
         HTTP_ASYNC_CLIENT,
 
+        /**
+         * netty http client
+         */
+        @Deprecated
+        NETTY,
+
         ;
     }
 }

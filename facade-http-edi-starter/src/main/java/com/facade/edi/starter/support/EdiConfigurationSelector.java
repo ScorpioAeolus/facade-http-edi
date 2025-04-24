@@ -5,6 +5,7 @@ import com.facade.edi.starter.config.EdiClientConfig;
 import com.facade.edi.starter.config.EdiHttpAsyncClientConfig;
 import com.facade.edi.starter.config.EdiHttpClientConfig;
 import com.facade.edi.starter.config.EdiNativeClientConfig;
+import com.facade.edi.starter.config.EdiNettyClientConfig;
 import com.facade.edi.starter.config.EdiOkHttpConfig;
 import com.facade.edi.starter.config.EdiRestTemplateConfig;
 import com.facade.edi.starter.config.EdiWebfluxClientConfig;
@@ -78,7 +79,7 @@ public class EdiConfigurationSelector implements ImportSelector, EnvironmentAwar
                     EdiClientConfig.class.getName(),
                     EdiWebfluxClientConfig.class.getName()
             };
-        }  else {
+        } else {
             throw new UnsupportedOperationException("Unknown clientType: " + clientType);
         }
     }
